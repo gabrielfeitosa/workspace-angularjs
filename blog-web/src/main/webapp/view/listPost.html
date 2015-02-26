@@ -9,7 +9,7 @@
       <div class="blog-post" ng-repeat="post in posts">
    		<h2 class="blog-post-title clicavel" ng-click="ver(post)">{{post.titulo}}</h2>
         <p class="blog-post-meta">{{post.dataRegistro | date:"MM/dd/yyyy @ hh:mm"}} by <a href="#">{{post.usuario}}</a></p>
-        <p>{{post.texto | cortarTexto}}</p>
+        <p>{{post.texto | limitarTexto: 500 }}</p>
       </div><!-- /.blog-post -->
       
       <nav>

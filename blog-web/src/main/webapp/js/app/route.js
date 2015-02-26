@@ -3,5 +3,6 @@ blogApp.config(function($routeProvider,$httpProvider){
 	.when("/",{templateUrl:'view/listPost.html',controller:'PostController'})
 	.when("/post",{templateUrl:'view/formPost.html',controller:'PostController'})
 	.when("/post/:postId",{templateUrl:'view/viewPost.html',controller:'PostController'})
+	.when("/post/:postId/edit",{templateUrl:'view/formPost.html',controller:'PostController'})
 	.otherwise("/");
 });

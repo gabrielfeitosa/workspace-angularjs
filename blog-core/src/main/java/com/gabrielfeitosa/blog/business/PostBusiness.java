@@ -19,7 +19,7 @@ public class PostBusiness {
 			Post p = new Post(idContador,"usuario"+idContador,"Post "+idContador, "Texto Post "+idContador);
 			p.setDataRegistro(new Date());
 			for(long i =0; i < random(); i++){
-				p.addComentario(new Comentario("userComent"+i, "comentario "+i));
+				p.addComentario(new Comentario("userComent"+i, "comentario "+i,new Date()));
 			}
 			posts.put(idContador,p);
 		}
@@ -62,6 +62,7 @@ public class PostBusiness {
 	}
 	
 	public Comentario adicionarComentario(Long idPost, Comentario comentario){
+		comentario.setData(new Date());
 		posts.get(idPost).addComentario(comentario);
 		return comentario;
 	}

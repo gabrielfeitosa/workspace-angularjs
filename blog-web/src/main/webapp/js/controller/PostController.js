@@ -14,7 +14,7 @@ blogApp.controller('PostController', ['$scope', 'Post','$window','$routeParams',
 	}
 
 	$scope.prepararEdicao = function(){
-		$window.location.href = '#/post/'+$scope.post.id;
+		$window.location.href = '#/post/'+$scope.post.id+"/edit";
 	}
 	
 	$scope.ver = function(post){
@@ -23,15 +23,17 @@ blogApp.controller('PostController', ['$scope', 'Post','$window','$routeParams',
 	
 	
 	$scope.save = function() {
+		var href = '';
 		if($scope.post.id){
 			Post.update({postId: $scope.post.id}, $scope.post);
+			href = '#/post/'+$scope.post.id;
 		}else{
 			Post.save($scope.post,function(data){
 				$scope.posts.push(data);
 			});
 		}
         $scope.post = new Post();
-        $window.location.href = '';
+        $window.location.href = href;
     }
 	
 	 $scope.deletar = function() {
@@ -41,6 +43,9 @@ blogApp.controller('PostController', ['$scope', 'Post','$window','$routeParams',
      }
 	 
 	 $scope.adicionarComentario = function(c){
+		 if($scope.post.comentarios === null){
+			 $scope.post.comentarios= [];
+		 }
 		 $scope.post.comentarios.push(Post.addComentario($scope.post.id,c));
 		 $scope.comentario = {};
 	 }

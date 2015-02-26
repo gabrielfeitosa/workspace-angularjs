@@ -5,10 +5,12 @@
 </head>
 <body>
 	<div ng-controller="PostController">
-		<h2>Novo Post</h2>
+		<h2>Post</h2>
 		<form name="postForm">
-			<p style="width: 180px;"><input type="text" class="form-control" ng-model="post.usuario" ng-required="true" placeholder="Usuário (Obrigatório) "/></p>
-			<p><input type="text" class="form-control" ng-model="post.titulo" ng-required="true" placeholder="Título (Obrigatório) "/></p>
+			<p style="width: 180px;" ng-if="!post.id">
+				<input  type="text" class="form-control" ng-model="post.usuario" ng-required="true" placeholder="Usuário (Obrigatório) "/>
+			</p>
+			<p><input type="text" class="form-control" ng-model="post.titulo" ng-required="true" placeholder="Título (Obrigatório) " ng-/></p>
 			<p><textarea class="form-control" ng-model="post.texto" ng-required="true" rows="15"></textarea></p>
 			<div class="post-buttons">
 				<button type="submit" class="btn btn-default" ng-click="save()" ng-disabled="postForm.$invalid">Salvar</button>

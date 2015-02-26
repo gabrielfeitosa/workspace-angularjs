@@ -13,7 +13,7 @@
 					<a title="apagar" ng-click="deletar()"><i class="glyphicon glyphicon-trash" aria-hidden="true"></i>apagar</a>
 	   			</div>
    			</h2>
-        	<p class="blog-post-meta">December 23, 2013 by <a href="#">{{post.usuario}}</a></p>
+        	<p class="blog-post-meta">{{post.dataRegistro | date:"MM/dd/yyyy @ hh:mm"}} by <a href="#">{{post.usuario}}</a></p>
         	<p>{{post.texto}}</p>
       	</div>
 
@@ -44,7 +44,7 @@
 									<a href="">{{c.usuario}}</a>
 								</span>
 								<span class="date">
-									00/00/2000
+									{{c.data | date:"MM/dd/yyyy @ hh:mm"}}
 								</span>
 							</div>
 							<div class="comment-entry">
