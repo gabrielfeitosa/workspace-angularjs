@@ -10,10 +10,10 @@
     
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
-
+	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/route.js"></script>
 	<script type="text/javascript" src="js/controllers.js"></script>
@@ -26,8 +26,7 @@
     <div id="navegacao" class="blog-masthead">
       <div class="container" ng-controller="NavController">
         <nav class="blog-nav">
-          <a class="blog-nav-item" ng-repeat="m in menu" href="{{m.href}}" ng-class="{ 'active': $index == selectedIndex }"
-             ng-click="itemClicked($index)">{{m.item}}</a>
+         <a class="blog-nav-item" ng-repeat="m in menu" ui-sref="{{m.state}}" ng-class="{ 'active': activeClass(m.state) }">{{m.item}}</a>
         </nav>
       </div>
     </div>
@@ -41,7 +40,7 @@
 
       <div class="row">
         <div class="col-sm-8 blog-main">
-       		<div ng-view></div>
+       		<div ui-view></div>
    		</div>
         
 
@@ -71,6 +70,7 @@
 
     <footer class="blog-footer">
       <p><a target="_blank" href="https://github.com/gfeitosa">Gabriel Feitosa</a> - 2015</p>
+      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
       <p>
         <a href="#navegacao/">Back to top</a>
       </p>

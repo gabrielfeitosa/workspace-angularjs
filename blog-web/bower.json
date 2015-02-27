@@ -1,8 +1,8 @@
 {
-  "name": "angular-phonecat",
-  "description": "A starter project for AngularJS",
+  "name": "blog-angular",
+  "description": "BLog para estudo do AngularJs e Bootstrap",
   "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-phonecat",
+  "homepage": "https://github.com/gfeitosa/blog_angular",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -13,7 +13,8 @@
     "angular-route": "1.3.x",
     "angular-resource": "1.3.x",
     "angular-animate": "1.3.x",
-    "angular-bootstrap": "0.12.1"
+    "angular-bootstrap": "0.12.1",
+    "angular-ui-router": "~0.2.13"
   },
   "resolutions": {
     "angular": "1.3.14"

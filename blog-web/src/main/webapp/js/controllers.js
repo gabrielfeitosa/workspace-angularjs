@@ -1,45 +1,27 @@
-blogApp.controller('PostController', ['$scope', 'Post','$window','$routeParams', function($scope, Post, $window, $routeParams) {
-	$scope.posts = [];
-	$scope.post = new Post();
-	
-	$scope.recuperar = function(id){
-		Post.get({ postId: id },function(data){
-			$scope.post = data;
-		});
-	}
-	
-	$scope.listar = function(){
-		$scope.posts =[];
-		$scope.posts = Post.query();
-	}
+'use strict';
 
-	$scope.prepararEdicao = function(){
-		$window.location.href = '#/post/'+$scope.post.id+"/edit";
-	}
+blogApp.controller('PostListController',['$scope','Post', function($scope, Post){
 	
-	$scope.ver = function(post){
-		$window.location.href = '#/post/'+post.id;
-	}
+	$scope.posts = Post.query();
 	
+}])
+.controller('PostDetailController',['$scope','$state','$stateParams','$window','$modal','Post', function($scope,$state,$stateParams,$window,$modal,Post){
 	
-	$scope.save = function() {
-		var href = '';
-		if($scope.post.id){
-			Post.update({postId: $scope.post.id}, $scope.post);
-			href = '#/post/'+$scope.post.id;
-		}else{
-			Post.save($scope.post,function(data){
-				$scope.posts.push(data);
-			});
-		}
-        $scope.post = new Post();
-        $window.location.href = href;
-    }
+	 $scope.post = Post.get({id: $stateParams.id});
 	
 	 $scope.deletar = function() {
-         Post.remove({ postId: $scope.post.id });
-         $scope.listar();
-         $window.location.href = '#/';
+		 
+		 var modalInstance = $modal.open({
+		      templateUrl: 'partials/components/modalConfirm.html',
+		      controller: 'ModalController',
+		      size: 'sm'
+		    });
+
+	    modalInstance.result.then(function (del) {
+	    	Post.remove({ id: $scope.post.id });
+			$state.go('home');
+	    });
+
      }
 	 
 	 $scope.adicionarComentario = function(c){
@@ -49,20 +31,55 @@ blogApp.controller('PostController', ['$scope', 'Post','$window','$routeParams',
 		 $scope.post.comentarios.push(Post.addComentario($scope.post.id,c));
 		 $scope.comentario = {};
 	 }
-
-	 if($routeParams.postId !== undefined){
-		 $scope.recuperar($routeParams.postId);
-	 }
-
-	$scope.listar();
-}]);
-
-blogApp.controller('NavController', [ '$scope', function($scope) {
-	$scope.menu = [{item: 'Home',href:'#/'},{item: 'Novo Post',href:'#/post'}];
-
-	$scope.selectedIndex = 0;
-
-	$scope.itemClicked = function($index) {
-		$scope.selectedIndex = $index;
+	 
+}])
+.controller('PostEditController', ['$scope','$state','$stateParams', 'Post', function($scope,$state,$stateParams,Post) {
+	
+	$scope.post = new Post();
+	
+	if($stateParams.id){
+		$scope.post = Post.get({id: $stateParams.id});
 	}
-} ]);
+	
+	$scope.salvar = function(){
+		if($scope.post.id){
+			update();
+		}else{
+			save();
+		}
+	}
+	
+	function update(){
+		Post.update({id: $scope.post.id}, $scope.post);
+		var id = $scope.post.id;
+		$scope.post = new Post();
+		$state.go('viewPost',{ "id": id});
+	}
+	
+	function save() {
+		Post.save($scope.post,function(data){
+			$scope.posts.push(data);
+		});
+		$scope.post = new Post();
+		$state.go('home');
+	}
+	
+}])
+.controller('NavController', [ '$scope','$state', function($scope,$state) {
+	
+	$scope.menu = [{item: 'Home',state:'home'},{item: 'Novo Post',state:'newPost'}];
+	
+	$scope.activeClass = function(state){
+		return $state.is(state);
+	}
+}])
+.controller('ModalController',['$scope','$modalInstance', function ($scope, $modalInstance) {
+
+	  $scope.ok = function () {
+	    $modalInstance.close(true);
+	  };
+
+	  $scope.cancel = function () {
+	    $modalInstance.dismiss('cancel');
+	  };
+	}]);
