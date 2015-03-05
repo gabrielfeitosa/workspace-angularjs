@@ -1,0 +1,95 @@
+<!doctype html>
+<html class="no-js" ng-app="blogYoApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Blog AngularJS - Gabriel Feitosa</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="stylesheet" type="text/css" href="styles/blog.css">
+    <!-- endbuild -->
+  </head>
+  <body >
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div id="navegacao" class="blog-masthead">
+      <div class="container" ng-controller="NavController">
+        <nav class="blog-nav">
+         <a class="blog-nav-item" ng-repeat="m in menu" ui-sref="{{m.state}}" ng-class="{ 'active': activeClass(m.state) }">{{m.item}}</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="blog-header">
+        <h1 class="blog-title">Blog AngularJS + Bootstrap</h1>
+        <p class="lead blog-description">Aplicação de estudo sobre o AngularJS, Bootstrap.</p>
+        <hr>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+           <div ui-view></div>
+       </div>
+
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          <div class="sidebar-module sidebar-module-inset">
+            <h4>Sobre</h4>
+            <p>Aplicação desenvolvida por <a target="_blank" href="http://br.linkedin.com/in/gabrielfeitosa">Gabriel Feitosa</a> para estudo sobre o AngularJS e o Bootstrap.</p>
+          </div>
+          <div class="sidebar-module">
+            <h4>Arquivos</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">Janeiro 2015</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a target="_blank" href="https://github.com/gabrielfeitosa">GitHub</a></li>
+              <li><a target="_blank" href="http://br.linkedin.com/in/gabrielfeitosa">LinkedIn</a></li>
+            </ol>
+          </div>
+        </div><!-- /.blog-sidebar -->
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+    <footer class="blog-footer">
+      <p><a target="_blank" href="https://github.com/gabrielfeitosa">Gabriel Feitosa</a> - 2015</p>
+      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p>
+        <a href="#navegacao/">Back to top</a>
+      </p>
+    </footer>
+
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/controllers.js"></script>
+        <script src="scripts/controllers/services.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
