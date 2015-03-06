@@ -2,9 +2,7 @@ package com.gabrielfeitosa.blog.entity;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Post extends EntidadeBase implements Serializable{
 
@@ -14,7 +12,6 @@ public class Post extends EntidadeBase implements Serializable{
 	private String titulo;
 	private String texto;
 	private Date dataRegistro;
-	private List<Comentario> comentarios;
 
 	public Post(){}
 	
@@ -37,26 +34,11 @@ public class Post extends EntidadeBase implements Serializable{
 		return usuario;
 	}
 
-	public final List<Comentario> getComentarios() {
-		return comentarios;
-	}
-	
 	public final Date getDataRegistro() {
 		return dataRegistro;
 	}
 	
 	public void setDataRegistro(Date dataRegistro) {
 		this.dataRegistro = dataRegistro;
-	}
-
-	public void addComentario(Comentario comentario){
-		if(comentarios == null){
-			comentarios = new ArrayList<Comentario>();
-		}
-		comentarios.add(comentario);
-	}
-	
-	public void limparComentarios(){
-		comentarios = null;
 	}
 }

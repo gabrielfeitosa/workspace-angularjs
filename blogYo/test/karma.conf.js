@@ -37,7 +37,7 @@ module.exports = function(config) {
     ],
 
     // web server port
-    port: 8080,
+    port: 9080,
 
     // Start these browsers, currently available:
     // - Chrome
@@ -54,6 +54,7 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
+      'karma-chrome-launcher',
       'karma-jasmine'
     ],
 

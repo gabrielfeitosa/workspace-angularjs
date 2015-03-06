@@ -24,7 +24,7 @@ import com.gabrielfeitosa.blog.entity.Post;
 
 @Path("/posts")
 @Produces(MediaType.APPLICATION_JSON)
-public class PostServico {
+public class PostService {
 
 	private PostBusiness postBusiness;
 	
@@ -71,7 +71,7 @@ public class PostServico {
 	}
 	
 	@POST
-	@Path("{id}/comentario")
+	@Path("{id}/comentarios")
 	public Response adicionarComentario(@PathParam("id") Long idPost, Comentario comentario){
 		Comentario c = postBusiness.adicionarComentario(idPost, comentario);
 		URI uri = UriBuilder.fromPath("posts/{id}").build(idPost);

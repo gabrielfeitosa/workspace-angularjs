@@ -13,15 +13,17 @@ import com.gabrielfeitosa.blog.entity.Post;
 public class PostBusiness {
 
 	private static Map<Long, Post> posts = new HashMap<Long, Post>();
-	private static Long idContador = 1l;
+	private ComentarioBusiness comentarioBusiness = new ComentarioBusiness();
+	private static Long idContadorPost = 1l;
+
 	{
-		for (;idContador < 5; ++idContador) {
-			Post p = new Post(idContador,"usuario"+idContador,"Post "+idContador, "Texto Post "+idContador);
+		for (;idContadorPost < 5; ++idContadorPost) {
+			Post p = new Post(idContadorPost,"usuario"+idContadorPost,"Post "+idContadorPost, "Texto Post "+idContadorPost);
 			p.setDataRegistro(new Date());
+			posts.put(idContadorPost,p);
 			for(long i =0; i < random(); i++){
-				p.addComentario(new Comentario("userComent"+i, "comentario "+i,new Date()));
+				comentarioBusiness.cadastrar(idContadorPost, new Comentario("userComent"+i, "comentario "+i,new Date()));
 			}
-			posts.put(idContador,p);
 		}
 	}
 	
@@ -30,7 +32,7 @@ public class PostBusiness {
 	}
 	
 	private Long novoId(){
-		return ++idContador;
+		return ++idContadorPost;
 	}
 	
 	public List<Post> listar(){
@@ -58,12 +60,11 @@ public class PostBusiness {
 	}
 	
 	public Post deletar(Long id){
+		comentarioBusiness.remover(id);
 		return posts.remove(id);
 	}
 	
 	public Comentario adicionarComentario(Long idPost, Comentario comentario){
-		comentario.setData(new Date());
-		posts.get(idPost).addComentario(comentario);
-		return comentario;
+		return comentarioBusiness.cadastrar(idPost, comentario);
 	}
 }

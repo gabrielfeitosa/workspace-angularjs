@@ -12,7 +12,7 @@
        	<p>{{post.texto}}</p>
    	</div>
 
-	<div class="panel panel-default">
+	<div class="panel panel-default" ng-controller="ComentarioController">
 	  <div class="panel-heading">
 	    <h3 class="panel-title">Comentários</h3>
 	  </div>
@@ -30,9 +30,9 @@
 				</p>
 			</form>
 		</div>
-	    <div ng-show="post.comentarios.length" class="comentarios">
+	    <div ng-show="comentarios.length" class="comentarios">
 			<ol>
-				<li class="comentario" ng-repeat="c in post.comentarios">
+				<li class="comentario" ng-repeat="c in comentarios">
 					<div>
 						<div class="comment-head">
 							<span class="name">

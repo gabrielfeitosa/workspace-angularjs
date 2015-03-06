@@ -23,22 +23,22 @@ angular
   	  };
   })
   .config(function($stateProvider, $urlRouterProvider) {
-	  $urlRouterProvider.otherwise("/home");
+	  $urlRouterProvider.otherwise('/home');
 
 	  $stateProvider
 	    .state('home', {
-	      url: "/home",
-	      templateUrl: "views/listPost.html",
+	      url: '/home',
+	      templateUrl: 'views/listPost.html',
 	      controller:'PostListController'
 	    })
 	    .state('newPost', {
-	      url: "/post",
-	      templateUrl: "views/formPost.html",
+	      url: '/post',
+	      templateUrl: 'views/formPost.html',
 	      controller:'PostEditController'
 	    })
 	    .state('viewPost', {
-	      url: "/post/:id",
-	      templateUrl: "views/viewPost.html",
+	      url: '/post/:id',
+	      templateUrl: 'views/viewPost.html',
 	      controller: 'PostDetailController',
 	      params: {
 	    	  edit: true
@@ -46,8 +46,8 @@ angular
 
 	    })
 	    .state('editPost', {
-	      url: "/post/:id/edit",
-	      templateUrl: "views/formPost.html",
+	      url: '/post/:id/edit',
+	      templateUrl: 'views/formPost.html',
 	      controller:'PostEditController'
 	    });
   });

@@ -2,20 +2,14 @@
 
 angular.module('blogYoApp')
 .factory('Post', ['$resource', function($resource){
-  var resource = $resource('/blog-api/posts/:id/:comentario',{comentario:''},{
+  var resource = $resource('blog-api/posts/:id',{},{
 	  update:{method: 'PUT'}
   });
 
-  resource.addComentario = function (id, comentario) {
-      return this.save(
-        {
-          comentario: "comentario",
-          id: id
-        },
-        comentario
-      );
-    };
-
   return resource;
 
+}])
+.factory('Comentario',['$resource', function($resource){
+  return $resource('blog-api/posts/:id/comentarios',{},{
+  });
 }]);
