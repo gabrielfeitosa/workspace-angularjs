@@ -22,6 +22,27 @@ angular
   	    return item;
   	  };
   })
+  .factory('MyModal',['$modal', function($modal){
+     var modal = $modal;
+
+     modal.show = function(typeModal){
+       var urlTemplate = 'views/components/';
+       if(typeModal === 'login'){
+         urlTemplate += 'modalLogin.html'; 
+       }else{
+         urlTemplate +='modalConfirm.html'
+       }
+
+       return $modal.open({
+  		      templateUrl: urlTemplate,
+  		      controller: 'ModalController',
+  		      size: 'sm'
+  		    });
+     };
+
+ 		 return modal;
+
+  }])
   .config(function($stateProvider, $urlRouterProvider) {
 	  $urlRouterProvider.otherwise('/home');
 

@@ -6,21 +6,15 @@ angular.module('blogYoApp')
 	$scope.posts = Post.query();
 
 }])
-.controller('PostDetailController',['$scope','$state','$stateParams','$window','$modal','Post', function($scope,$state,$stateParams,$window,$modal,Post){
+.controller('PostDetailController',['$scope','$state','$stateParams','$window','MyModal','Post', function($scope,$state,$stateParams,$window,MyModal,Post){
 
 	 $scope.post = Post.get({id: $stateParams.id});
 
 	 $scope.deletar = function() {
 
-		 var modalInstance = $modal.open({
-		      templateUrl: 'views/components/modalConfirm.html',
-		      controller: 'ModalController',
-		      size: 'sm'
-		    });
-
-	    modalInstance.result.then(function () {
+		  MyModal.show().result.then(function () {
 	    	Post.remove({ id: $scope.post.id });
-			$state.go('home');
+				$state.go('home');
 	    });
 
 		};
