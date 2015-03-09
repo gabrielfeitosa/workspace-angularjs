@@ -11,6 +11,7 @@
 angular
   .module('blogYoApp', [
       'ngResource',
+      'ngCookies',
       'ui.router',
       'ui.bootstrap'
   ])
@@ -28,9 +29,9 @@ angular
      modal.show = function(typeModal){
        var urlTemplate = 'views/components/';
        if(typeModal === 'login'){
-         urlTemplate += 'modalLogin.html'; 
+         urlTemplate += 'modalLogin.html';
        }else{
-         urlTemplate +='modalConfirm.html'
+         urlTemplate +='modalConfirm.html';
        }
 
        return $modal.open({
@@ -43,8 +44,11 @@ angular
  		 return modal;
 
   }])
-  .config(function($stateProvider, $urlRouterProvider) {
-	  $urlRouterProvider.otherwise('/home');
+  .config(['$stateProvider', '$urlRouterProvider', '$httpProvider',function($stateProvider, $urlRouterProvider,$httpProvider) {
+
+    $httpProvider.defaults.withCredentials = true;
+    
+    $urlRouterProvider.otherwise('/home');
 
 	  $stateProvider
 	    .state('home', {
@@ -71,4 +75,4 @@ angular
 	      templateUrl: 'views/formPost.html',
 	      controller:'PostEditController'
 	    });
-  });
+  }]);
