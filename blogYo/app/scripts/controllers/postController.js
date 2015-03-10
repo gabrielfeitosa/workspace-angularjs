@@ -1,32 +1,35 @@
 'use strict';
 
 angular.module('blogYoApp')
-.controller('PostListController',['$scope','Post', function($scope, Post){
+.controller('PostListController',['$scope','PostService', function($scope, PostService){
 
-	$scope.posts = Post.query();
+	$scope.posts = PostService.query();
 
 }])
-.controller('PostDetailController',['$scope','$state','$stateParams','$window','MyModal','Post', function($scope,$state,$stateParams,$window,MyModal,Post){
+.controller('PostDetailController',['$scope','$state','$stateParams','$window','MyModalFactory','PostService','UserFactory',
+	function($scope,$state,$stateParams,$window,MyModalFactory,PostService,UserFactory){
 
-	 $scope.post = Post.get({id: $stateParams.id});
+		$scope.post = PostService.get({id: $stateParams.id});
 
-	 $scope.deletar = function() {
+	 	$scope.deletar = function() {
 
-		  MyModal.show().result.then(function () {
-	    	Post.remove({ id: $scope.post.id });
+			MyModalFactory.show().result.then(function () {
+	    	PostService.remove({ id: $scope.post.id });
 				$state.go('home');
 	    });
 
 		};
 
-
+		$scope.isEditable = function(){
+			return UserFactory.isLogged() &&	($scope.post.usuario === UserFactory.getUser().login);
+		};
 }])
-.controller('PostEditController', ['$scope','$state','$stateParams', 'Post', function($scope,$state,$stateParams,Post) {
+.controller('PostEditController', ['$scope','$state','$stateParams', 'PostService', function($scope,$state,$stateParams,PostService) {
 
 	$scope.post = {};
 
 	if($stateParams.id){
-		$scope.post = Post.get({id: $stateParams.id});
+		$scope.post = PostService.get({id: $stateParams.id});
 	}
 
 	$scope.salvar = function(){
@@ -38,16 +41,14 @@ angular.module('blogYoApp')
 	};
 
 	function update(){
-		Post.update({id: $scope.post.id}, $scope.post);
+		PostService.update({id: $scope.post.id}, $scope.post);
 		var id = $scope.post.id;
 		$scope.post = {};
 		$state.go('viewPost',{ 'id': id});
 	}
 
 	function save() {
-		Post.save($scope.post,function(data){
-			$scope.posts.push(data);
-		});
+		PostService.save($scope.post);
 		$scope.post = {};
 		$state.go('home');
 	}

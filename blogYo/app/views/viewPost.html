@@ -3,9 +3,9 @@
 	<div class="blog-post">
   			<h2 class="blog-post-title" ng-mouseover="showMenuPost = true" ng-mouseleave="showMenuPost = false">
   				<span>{{post.titulo}}</span>
-   			<div class="blog-post-menu" ng-show="showMenuPost">
-				<a title="editar" ui-sref="editPost({id:post.id})"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-				<a title="apagar" class="clicavel" ng-click="deletar()"><i class="glyphicon glyphicon-trash" ></i>apagar</a>
+   			<div class="blog-post-menu" ng-if="isEditable()" ng-show="showMenuPost">
+					<a title="editar" ui-sref="editPost({id:post.id})"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+					<a title="apagar" class="clicavel" ng-click="deletar()"><i class="glyphicon glyphicon-trash" ></i>apagar</a>
    			</div>
   			</h2>
        	<p class="blog-post-meta">{{post.dataRegistro | date:"MM/dd/yyyy @ hh:mm"}} by <a href="#">{{post.usuario}}</a></p>

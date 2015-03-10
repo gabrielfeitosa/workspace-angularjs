@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" ng-app="blogYoApp">
+<html class="no-js" ng-app="blogYoApp" ng-strict-di>
   <head>
     <meta charset="utf-8">
     <title>Blog AngularJS - Gabriel Feitosa</title>
@@ -9,37 +9,40 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" type="text/css" href="styles/style.css">
     <link rel="stylesheet" type="text/css" href="styles/blog.css">
+    <link rel="stylesheet" type="text/css" href="styles/lib/loading-bar.css">
     <!-- endbuild -->
   </head>
-  <body >
+  <body>
+
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div id="navegacao" class="blog-masthead">
+    <div id="navegacao" class="blog-masthead" ng-cloak>
       <div class="container" ng-controller="NavController">
         <nav class="blog-nav">
          <a class="blog-nav-item" ng-repeat="m in menu" ui-sref="{{m.state}}" ng-class="{ 'active': activeClass(m.state) }">{{m.item}}</a>
-         <form class="navbar-form navbar-right">
-           <span ng-show="true">
+         <form class="navbar-form navbar-right" ng-controller="LoginController">
+           <span ng-if="!isLogged()">
              <div class="form-group">
-               <input type="text" placeholder="Email" class="form-control">
+               <input type="text" placeholder="Email" class="form-control" ng-model="email">
              </div>
              <div class="form-group">
-               <input type="password" placeholder="Password" class="form-control">
+               <input type="password" placeholder="Password" class="form-control" ng-model="pass">
              </div>
-             <button type="submit" class="btn btn-success">Sign in</button>
+             <button type="submit" ng-click="doLogin(email,pass);" class="btn btn-success">Sign in</button>
            </span>
-           <span ng-hide="true">
+           <span ng-if="isLogged()">
              <div class="form-group">
-               <label style="color: #ffffff;" >gabrielfeitosa</label>
+               <label style="color: #ffffff;margin-right:5px;" >Olá, {{user.nome}}</label>
              </div>
-             <button type="submit" class="btn btn-success">Logout</button>
+             <button type="submit" class="btn btn-success" ng-click="doLogout();">Logout</button>
            </span>
 
          </form>
@@ -102,15 +105,21 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/services.js"></script>
+        <script src="scripts/factory.js"></script>
         <script src="scripts/controllers/utilControllers.js"></script>
         <script src="scripts/controllers/postController.js"></script>
         <script src="scripts/controllers/comentarioController.js"></script>
-        <script src="scripts/controllers/services.js"></script>
+        <script src="scripts/controllers/loginController.js"></script>
+        <script src="scripts/lib/loading-bar.js"></script>
         <!-- endbuild -->
 </body>
 </html>

@@ -1,11 +1,9 @@
 'use strict';
 
 angular.module('blogYoApp')
-.controller('NavController', [ '$scope','$state','$cookieStore', function($scope,$state,$cookieStore) {
+.controller('NavController', [ '$scope','$state', function($scope,$state) {
 
 	$scope.menu = [{item: 'Home',state:'home'},{item: 'Novo Post',state:'newPost'}];
-
-  console.log($cookieStore.get('JSESSIONID'));
 
 	$scope.activeClass = function(state){
 		return $state.is(state);

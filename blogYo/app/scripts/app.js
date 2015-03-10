@@ -12,42 +12,22 @@ angular
   .module('blogYoApp', [
       'ngResource',
       'ngCookies',
+      'ngAnimate',
       'ui.router',
-      'ui.bootstrap'
+      'ui.bootstrap',
+      'LocalStorageModule',
+      'angular-loading-bar'
   ])
-  .filter('limitarTexto', function () {
-  	  return function (item,limit) {
-  		  if(item.length > limit){
-  			  return item.substring(0, limit) + '...';
-  		  }
-  	    return item;
-  	  };
-  })
-  .factory('MyModal',['$modal', function($modal){
-     var modal = $modal;
-
-     modal.show = function(typeModal){
-       var urlTemplate = 'views/components/';
-       if(typeModal === 'login'){
-         urlTemplate += 'modalLogin.html';
-       }else{
-         urlTemplate +='modalConfirm.html';
-       }
-
-       return $modal.open({
-  		      templateUrl: urlTemplate,
-  		      controller: 'ModalController',
-  		      size: 'sm'
-  		    });
-     };
-
- 		 return modal;
-
+  .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = true;
+  }])
+  .config(['localStorageServiceProvider', function(localStorageServiceProvider){
+    localStorageServiceProvider.setPrefix('blogLs');
   }])
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider',function($stateProvider, $urlRouterProvider,$httpProvider) {
 
     $httpProvider.defaults.withCredentials = true;
-    
+
     $urlRouterProvider.otherwise('/home');
 
 	  $stateProvider
@@ -75,4 +55,12 @@ angular
 	      templateUrl: 'views/formPost.html',
 	      controller:'PostEditController'
 	    });
-  }]);
+  }])
+  .filter('limitarTexto', function () {
+  	  return function (item,limit) {
+  		  if(item.length > limit){
+  			  return item.substring(0, limit) + '...';
+  		  }
+  	    return item;
+  	  };
+  });

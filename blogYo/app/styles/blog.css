@@ -1,7 +1,10 @@
 /*
  * Globals
  */
-
+ [ng\:cloak], [ng-cloak], .ng-cloak {
+   display: none !important;
+ }
+ 
 body {
   font-family: Georgia, "Times New Roman", Times, serif;
   color: #555;
