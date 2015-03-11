@@ -1,44 +1,49 @@
+(function(){
 'use strict';
 
 angular.module('blogYoApp')
-  .factory('MyModalFactory',['$modal', function($modal){
-     var modal = $modal;
+.factory('MyModalFactory',['$modal', function($modal){
+  var modal = $modal;
+  modal.show = function(){
+    var urlTemplate = 'views/components/';
+    urlTemplate +='modalConfirm.html';
+    return $modal.open({
+		  templateUrl: urlTemplate,
+		  controller: 'ModalController',
+      controllerAs: 'modalCtrl',
+		  size: 'sm'
+		 });
+  };
+	return modal;
+}])
+.factory('AuthFactory',['localStorageService', function(localStorageService){
+  var Auth = {};
 
-     modal.show = function(){
-       var urlTemplate = 'views/components/';
-       urlTemplate +='modalConfirm.html';
+  function get(){
+    return localStorageService.get('user');
+  }
 
-       return $modal.open({
-  		      templateUrl: urlTemplate,
-  		      controller: 'ModalController',
-  		      size: 'sm'
-  		    });
-     };
+  Auth.getUser = function(){
+    var u = get();
+    return u || [];
+  };
 
- 		 return modal;
+  Auth.isLogged = function(){
+    return !angular.equals(angular.toJson(get()),'[]');
+  };
 
-  }])
-  .factory('UserFactory',['localStorageService', function(localStorageService){
+  Auth.setUser = function(u){
+    localStorageService.set('user',u);
+  };
 
-    var User = {};
-
-    function get(){
-      return localStorageService.get('user');
+  return Auth;
+}])
+.factory('HttpInterceptor',['$q', function($q){
+  return {
+    'responseError': function(rejection) {
+      console.log('HttpInterceptor: '+rejection);
+      return $q.reject(rejection);
     }
-
-    User.getUser = function(){
-      var u = get();
-      return u || [];
-    };
-
-    User.isLogged = function(){
-      return !angular.equals(angular.toJson(get()),'[]');
-    };
-
-    User.setUser = function(u){
-      localStorageService.set('user',u);
-    };
-
-    return User;
-
-  }]);
+  };
+}]);
+})();

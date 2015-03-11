@@ -1,24 +1,26 @@
+(function(){
 'use strict';
 
-/**
- * @ngdoc function
- * @name blogYoApp.controller:ComentariosCtrl
- * @description
- * # ComentariosCtrl
- * Controller of the blogYoApp
- */
-angular.module('blogYoApp')
-  .controller('ComentarioController', ['$scope','$stateParams','ComentarioService', function ($scope,$stateParams,ComentarioService) {
-    $scope.comentarios = ComentarioService.query({id: $stateParams.id});
-    $scope.comentario = {};
+function ComentarioController($stateParams,ComentarioService) {
+  var vm = this;
 
-    $scope.adicionarComentario = function(){
-      ComentarioService.save({id: $stateParams.id},$scope.comentario, function(data){
-      if(!$scope.comentarios){
-     		 $scope.comentarios= [];
-     	}
-      $scope.comentarios.push(data);
+  vm.comentarios = ComentarioService.query({id: $stateParams.id});
+  vm.comentario = {};
+
+  function adicionarComentario(){
+    ComentarioService.save({id: $stateParams.id},vm.comentario, function(data){
+      if(!vm.comentarios){
+          vm.comentarios= [];
+      }
+      vm.comentarios.push(data);
     });
- 		 $scope.comentario = {};
- 	 };
-  }]);
+    vm.comentario = {};
+  }
+
+  vm.adicionarComentario = adicionarComentario;
+}
+
+ComentarioController.$inject = ['$stateParams','ComentarioService'];
+
+angular.module('blogYoApp').controller('ComentarioController', ComentarioController);
+})();

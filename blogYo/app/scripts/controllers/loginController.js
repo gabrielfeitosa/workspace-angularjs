@@ -1,27 +1,40 @@
+(function(){
 'use strict';
 
-angular.module('blogYoApp')
-.controller('LoginController',['$scope','UserFactory','LoginService', function($scope,UserFactory, LoginService){
+function LoginController($scope,AuthFactory, LoginService){
+  var vm = this;
+  var usuario = AuthFactory.getUser();
+  vm.user = usuario || [];
 
-  var usuario = UserFactory.getUser();
-  $scope.user = usuario || [];
+  $scope.$watch(function() {
+    return vm.user;
+  }, function(newValue, oldValue) {
+    AuthFactory.setUser(newValue);
+  });
 
-  $scope.$watch('user', function () {
-    UserFactory.setUser($scope.user);
-  }, true);
+  function isLogged(){
+    return AuthFactory.isLogged();
+  }
 
-  $scope.isLogged = function(){
-    return UserFactory.isLogged();
-  };
-
-	$scope.doLogin = function(email,pass){
+	function doLogin(email,pass){
     LoginService.login({email: email, senha: pass}, function(data){
-      $scope.user = data;
+      vm.user = data;
     });
-  };
+  }
 
-  $scope.doLogout = function(){
-    $scope.user = [];
-  };
+  function doLogout(){
+    LoginService.logout(function(res){
+      console.log('LoginController.doLogout: '+angular.toJson(res));
+    });
+    vm.user = [];
+  }
 
-}]);
+  vm.isLogged = isLogged;
+  vm.doLogin = doLogin;
+  vm.doLogout = doLogout;
+}
+
+LoginController.$inject = ['$scope','AuthFactory','LoginService'];
+
+angular.module('blogYoApp').controller('LoginController',LoginController);
+})();

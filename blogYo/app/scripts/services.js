@@ -1,3 +1,4 @@
+(function(){
 'use strict';
 
 angular.module('blogYoApp')
@@ -7,16 +8,18 @@ angular.module('blogYoApp')
   });
 
   return resource;
-
 }])
 .factory('ComentarioService',['$resource', function($resource){
   return $resource('blog-api/posts/:id/comentarios',{},{
   });
 }])
 .factory('LoginService',['$resource', function($resource){
-  return $resource('blog-api/login',{},{
+  return $resource('blog-api/auth/:event',{event:''},{
     login : {
         method : 'POST',
+        params: {
+            event: 'login'
+        },
         headers : {'Content-Type': 'application/x-www-form-urlencoded'},
         transformRequest: function(obj) {
             var str = [];
@@ -25,6 +28,15 @@ angular.module('blogYoApp')
             }
             return str.join('&');
         }
+    },
+    logout: {
+      method: 'POST',
+      params: {
+          event: 'logout'
+      }
     }
   });
 }]);
+
+
+})();

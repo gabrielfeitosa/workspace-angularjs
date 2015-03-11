@@ -1,18 +1,18 @@
 <meta charset="UTF-8">
-<div ng-controller="PostDetailController">
+<div ng-controller="PostDetailController as detailCtrl">
 	<div class="blog-post">
   			<h2 class="blog-post-title" ng-mouseover="showMenuPost = true" ng-mouseleave="showMenuPost = false">
-  				<span>{{post.titulo}}</span>
-   			<div class="blog-post-menu" ng-if="isEditable()" ng-show="showMenuPost">
-					<a title="editar" ui-sref="editPost({id:post.id})"><i class="glyphicon glyphicon-pencil"></i>editar</a>
-					<a title="apagar" class="clicavel" ng-click="deletar()"><i class="glyphicon glyphicon-trash" ></i>apagar</a>
+  				<span>{{detailCtrl.post.titulo}}</span>
+   			<div class="blog-post-menu" ng-if="detailCtrl.isEditable()" ng-show="showMenuPost">
+					<a title="editar" ui-sref="editPost({id:detailCtrl.post.id})"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+					<a title="apagar" class="clicavel" ng-click="detailCtrl.deletar()"><i class="glyphicon glyphicon-trash" ></i>apagar</a>
    			</div>
   			</h2>
-       	<p class="blog-post-meta">{{post.dataRegistro | date:"MM/dd/yyyy @ hh:mm"}} by <a href="#">{{post.usuario}}</a></p>
-       	<p>{{post.texto}}</p>
+       	<p class="blog-post-meta">{{detailCtrl.post.dataRegistro | date:"MM/dd/yyyy @ hh:mm"}} by <a href="#">{{detailCtrl.post.usuario}}</a></p>
+       	<p>{{detailCtrl.post.texto}}</p>
    	</div>
 
-	<div class="panel panel-default" ng-controller="ComentarioController">
+	<div class="panel panel-default" ng-controller="ComentarioController as commentCtrl">
 	  <div class="panel-heading">
 	    <h3 class="panel-title">Comentários</h3>
 	  </div>
@@ -20,19 +20,19 @@
 	  	<div class="comentarios">
 			<form name="comentarioForm">
 				<p>
-					<input type="text" class="form-control" style="width:180px;" ng-model="comentario.usuario" placeholder="Usuário (Obrigatório)" ng-required="true">
+					<input type="text" class="form-control" style="width:180px;" ng-model="commentCtrl.comentario.usuario" placeholder="Usuário (Obrigatório)" ng-required="true">
 				</p>
 				<p>
-					<textarea class="form-control" ng-model="comentario.texto" ng-required="true"></textarea>
+					<textarea class="form-control" ng-model="commentCtrl.comentario.texto" ng-required="true"></textarea>
 				</p>
 				<p>
-					<button class="btn btn-default" type="submit" ng-click="adicionarComentario(comentario)" ng-disabled="comentarioForm.$invalid">Enviar Comentário</button>
+					<button class="btn btn-default" type="submit" ng-click="commentCtrl.adicionarComentario()" ng-disabled="comentarioForm.$invalid">Enviar Comentário</button>
 				</p>
 			</form>
 		</div>
-	    <div ng-show="comentarios.length" class="comentarios">
+	    <div ng-show="commentCtrl.comentarios.length" class="comentarios">
 			<ol>
-				<li class="comentario" ng-repeat="c in comentarios">
+				<li class="comentario" ng-repeat="c in commentCtrl.comentarios">
 					<div>
 						<div class="comment-head">
 							<span class="name">
