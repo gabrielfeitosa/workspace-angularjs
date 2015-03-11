@@ -14,17 +14,17 @@ angular.module('blogYoApp')
   });
 }])
 .factory('LoginService',['$resource', function($resource){
-  return $resource('blog-api/login',{},{
-    login : {
-        method : 'POST',
-        headers : {'Content-Type': 'application/x-www-form-urlencoded'},
-        transformRequest: function(obj) {
-            var str = [];
-            for(var p in obj){
-              str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-            }
-            return str.join('&');
+    return $resource('blog-api/login', {}, {
+      login: {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+          }
+          return str.join('&');
         }
-    }
-  });
+      }
+    });
 }]);
