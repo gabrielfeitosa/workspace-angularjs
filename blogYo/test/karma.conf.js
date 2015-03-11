@@ -29,6 +29,7 @@ module.exports = function(config) {
       'bower_components/angular-local-storage/dist/angular-local-storage.js',
       'bower_components/angular-loading-bar/build/loading-bar.js',
       'bower_components/angular-animate/angular-animate.js',
+      'bower_components/toastr/toastr.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
