@@ -2,26 +2,24 @@
 'use strict';
 
 angular.module('blogYoApp')
-.factory('MyModalFactory',['$modal', function($modal){
-  var modal = $modal;
-  modal.show = function(){
-    var urlTemplate = 'views/components/';
-    urlTemplate +='modalConfirm.html';
-    return $modal.open({
-		  templateUrl: urlTemplate,
-		  controller: 'ModalController',
-      controllerAs: 'modalCtrl',
-		  size: 'sm'
-		 });
-  };
-	return modal;
-}])
-.factory('AuthFactory',['localStorageService', function(localStorageService){
+.factory('AuthFactory',['localStorageService','AuthService', function(localStorageService,AuthService){
+
   var Auth = {};
 
   function get(){
     return localStorageService.get('user');
   }
+
+  Auth.logar = function(email,pass){
+    return AuthService.logar({email: email, senha: pass}).$promise;
+  };
+
+  Auth.logout = function(){
+    AuthService.logout(function(res){
+      console.log('AuthFactory.logout: '+angular.toJson(res));
+    });
+  };
+
 
   Auth.getUser = function(){
     var u = get();

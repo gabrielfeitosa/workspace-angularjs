@@ -2,20 +2,9 @@
 'use strict';
 
 angular.module('blogYoApp')
-.factory('PostService', ['$resource', function($resource){
-  var resource = $resource('blog-api/posts/:id',{},{
-	  update:{method: 'PUT'}
-  });
-
-  return resource;
-}])
-.factory('ComentarioService',['$resource', function($resource){
-  return $resource('blog-api/posts/:id/comentarios',{},{
-  });
-}])
-.factory('LoginService',['$resource', function($resource){
+.factory('AuthService',['$resource', function($resource){
   return $resource('blog-api/auth/:event',{event:''},{
-    login : {
+    logar : {
         method : 'POST',
         params: {
             event: 'login'

@@ -17,7 +17,6 @@
   <modules>
     <module>blog-core</module>
     <module>blog-api</module>
-    <module>blog-web</module>
   </modules>
 
 </project>

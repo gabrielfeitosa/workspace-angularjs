@@ -2,9 +2,6 @@
 'use strict';
 
 angular.module('blogYoApp')
-.config(['localStorageServiceProvider', function(localStorageServiceProvider){
-  localStorageServiceProvider.setPrefix('blogLs');
-}])
 .config(['$stateProvider', '$urlRouterProvider', '$httpProvider',function($stateProvider, $urlRouterProvider,$httpProvider) {
 
   $httpProvider.defaults.withCredentials = true;
@@ -15,7 +12,9 @@ angular.module('blogYoApp')
   $stateProvider
     .state('home', {
       url: '/home',
-      templateUrl: 'views/listPost.html'
+      templateUrl: 'views/listPost.html',
+      controller: 'PostListController',
+      controllerAs: 'vm'
     })
     .state('newPost', {
       url: '/post',
@@ -24,6 +23,8 @@ angular.module('blogYoApp')
     .state('viewPost', {
       url: '/post/:id',
       templateUrl: 'views/viewPost.html',
+      controller: 'PostDetailController',
+      controllerAs: 'vm',
       params: {
     	  edit: true
       }
