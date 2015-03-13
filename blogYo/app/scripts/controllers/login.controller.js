@@ -1,43 +1,45 @@
-(function(){
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('blogYoApp').controller('LoginController',LoginController);
+  angular.module('blogYoApp').controller('LoginController', LoginController);
 
-LoginController.$inject = ['$scope','AuthFactory'];
-/*jshint latedef: false */
-function LoginController($scope,AuthFactory){
-  var vm = this;
-  var usuario = AuthFactory.getUser();
-  vm.user = usuario || [];
+  LoginController.$inject = ['$scope', 'AuthFactory', 'toasterFactory'];
+  /*jshint latedef: false */
+  function LoginController($scope, AuthFactory, toasterFactory) {
+    var vm = this;
+    var usuario = AuthFactory.getUser();
+    vm.user = usuario || [];
 
-  vm.isLogged = isLogged;
-  vm.doLogin = doLogin;
-  vm.doLogout = doLogout;
+    vm.isLogged = isLogged;
+    vm.doLogin = doLogin;
+    vm.doLogout = doLogout;
 
-  iniciar();
+    iniciar();
 
-  //////////////////////////
-  function iniciar(){
-    $scope.$watch(function() {
-      return vm.user;
-    }, function(newValue) {
-      AuthFactory.setUser(newValue);
-    });
+    //////////////////////////
+    function iniciar() {
+      $scope.$watch(function () {
+        return vm.user;
+      }, function (newValue) {
+        AuthFactory.setUser(newValue);
+      });
+    }
+
+    function isLogged() {
+      return AuthFactory.isLogged();
+    }
+
+    function doLogin(email, pass) {
+      AuthFactory.logar(email, pass).then(function (data) {
+        vm.user = data;
+      }).catch(function (data) {
+        toasterFactory.errorMsg('Erro: ' + data.status);
+      });
+    }
+
+    function doLogout() {
+      AuthFactory.logout();
+      vm.user = [];
+    }
   }
-
-  function isLogged(){
-    return AuthFactory.isLogged();
-  }
-
-	function doLogin(email,pass){
-    AuthFactory.logar(email, pass).then(function(data){
-      vm.user = data;
-    });
-  }
-
-  function doLogout(){
-    AuthFactory.logout();
-    vm.user = [];
-  }
-}
 })();
