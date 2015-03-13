@@ -3,7 +3,7 @@
 angular.module('blogYoApp').controller('NavController',NavController);
 
 NavController.$inject = ['$state'];
-/*jshint latedef: false */
+
 function NavController($state) {
 	var vm = this;
 
@@ -14,7 +14,7 @@ function NavController($state) {
 	//////////////////////
 
 	function iniciar(){
-		vm.menu = [{item: 'Home',state:'home'},{item: 'Novo Post',state:'newPost'}];
+		vm.menu = [{item: 'Home',state:'home'},{item: 'Novo Post',state:'post.new'}];
 	}
 
 	function activeClass(state){

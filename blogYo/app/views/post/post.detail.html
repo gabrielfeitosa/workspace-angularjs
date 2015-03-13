@@ -4,13 +4,13 @@
   			<h2 class="blog-post-title" ng-mouseover="showMenuPost = true" ng-mouseleave="showMenuPost = false">
   				<span>{{vm.post.titulo}}</span>
    			<div class="blog-post-menu" ng-if="vm.isEditable()" ng-show="showMenuPost">
-					<a title="editar" ui-sref="editPost({id:vm.post.id})"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+					<a title="editar" ui-sref="post.edit({id:vm.post.id})"><i class="glyphicon glyphicon-pencil"></i>editar</a>
 					<a title="apagar" class="clicavel" ng-click="vm.deletar()"><i class="glyphicon glyphicon-trash" ></i>apagar</a>
    			</div>
   			</h2>
        	<p class="blog-post-meta">{{vm.post.dataRegistro | date:"MM/dd/yyyy @ hh:mm"}} by <a href="#">{{vm.post.usuario}}</a></p>
        	<p>{{vm.post.texto}}</p>
-   	</div>
+  </div>
 
 	<div class="panel panel-default" ng-controller="ComentarioController as commentCtrl">
 	  <div class="panel-heading">

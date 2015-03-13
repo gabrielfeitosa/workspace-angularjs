@@ -4,7 +4,7 @@
 angular.module('blogYoApp').controller('LoginController',LoginController);
 
 LoginController.$inject = ['$scope','AuthFactory'];
-/*jshint latedef: false */
+
 function LoginController($scope,AuthFactory){
   var vm = this;
   var usuario = AuthFactory.getUser();

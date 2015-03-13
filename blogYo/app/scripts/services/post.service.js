@@ -5,7 +5,7 @@ angular.module('blogYoApp')
 .factory('PostService',PostService);
 
 PostService.$inject = ['$resource'];
-/*jshint latedef: false */
+
 function PostService($resource){
 
   var resource = $resource('blog-api/posts/:id',{},{
@@ -29,7 +29,7 @@ function PostService($resource){
     update: function(post){
       return promise(resource.update({id: post.id},post));
     },
-    delete: function(id){
+    remove: function(id){
       return promise(resource.delete({id: id}));
     }
   };

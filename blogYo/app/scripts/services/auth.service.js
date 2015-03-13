@@ -2,8 +2,11 @@
 'use strict';
 
 angular.module('blogYoApp')
-.factory('AuthService',['$resource', function($resource){
-  return $resource('blog-api/auth/:event',{event:''},{
+.factory('AuthService', AuthService);
+
+AuthService.$inject = ['$resource'];
+function AuthService($resource){
+  var resource = $resource('blog-api/auth/:event',{event:''},{
     logar : {
         method : 'POST',
         params: {
@@ -25,7 +28,18 @@ angular.module('blogYoApp')
       }
     }
   });
-}]);
 
+  function promise(ch){
+    return ch.$promise;
+  }
 
+  return {
+    logar: function(email,pass){
+      return promise(resource.logar({email: email, senha: pass}));
+    },
+    logout: function(){
+      return promise(resource.logout());
+    }
+  };
+}
 })();

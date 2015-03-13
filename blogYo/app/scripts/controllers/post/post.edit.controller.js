@@ -2,9 +2,9 @@
 'use strict';
 angular.module('blogYoApp').controller('PostEditController', PostEditController);
 
-PostEditController.$inject = ['$scope','$state','$stateParams', 'PostService'];
-/*jshint latedef: false */
-function PostEditController($scope,$state,$stateParams,PostService) {
+PostEditController.$inject = ['PostService','RouterFactory'];
+
+function PostEditController(PostService,RouterFactory) {
 
 	var vm = this;
 
@@ -15,8 +15,11 @@ function PostEditController($scope,$state,$stateParams,PostService) {
 	/////////////////////////////////
 	function iniciar(){
 		vm.post = {};
-		if($stateParams.id){
-			vm.post = PostService.get({id: $stateParams.id});
+		var id =RouterFactory.getParam('id');
+		if(id){
+			PostService.get(id).then(function(data){
+				vm.post = data;
+			});
 		}
 	}
 
@@ -32,12 +35,12 @@ function PostEditController($scope,$state,$stateParams,PostService) {
 		PostService.update(vm.post);
 		var id = vm.post.id;
 		vm.post = {};
-		$state.go('viewPost',{ 'id': id});
+		RouterFactory.go('post.detail',{ 'id': id});
 	}
 
 	function save() {
 		PostService.save(vm.post).then(function(){
-			$state.go('home');
+			RouterFactory.go('home');
 		});
 		vm.post = {};
 

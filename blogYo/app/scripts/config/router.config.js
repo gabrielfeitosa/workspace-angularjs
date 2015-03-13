@@ -12,26 +12,32 @@ angular.module('blogYoApp')
   $stateProvider
     .state('home', {
       url: '/home',
-      templateUrl: 'views/listPost.html',
+      templateUrl: 'views/post/post.list.html',
       controller: 'PostListController',
       controllerAs: 'vm'
     })
-    .state('newPost', {
+    .state('post',{
       url: '/post',
-      templateUrl: 'views/formPost.html'
+      abstract: true,
+      templateUrl: 'views/post/post.html'
     })
-    .state('viewPost', {
-      url: '/post/:id',
-      templateUrl: 'views/viewPost.html',
+    .state('post.new', {
+      url: '',
+      templateUrl: 'views/post/post.form.html',
+      controller: 'PostEditController',
+      controllerAs: 'editCtrl'
+    })
+    .state('post.detail', {
+      url: '/:id',
+      templateUrl: 'views/post/post.detail.html',
       controller: 'PostDetailController',
-      controllerAs: 'vm',
-      params: {
-    	  edit: true
-      }
+      controllerAs: 'vm'
     })
-    .state('editPost', {
-      url: '/post/:id/edit',
-      templateUrl: 'views/formPost.html'
+    .state('post.edit', {
+      url: '/:id/edit',
+      templateUrl: 'views/post/post.form.html',
+      controller: 'PostEditController',
+      controllerAs: 'editCtrl'
     });
 }]);
 })();

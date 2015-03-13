@@ -3,7 +3,7 @@
 angular.module('blogYoApp').controller('PostListController',PostListController);
 
 PostListController.$inject = ['PostService'];
-/*jshint latedef: false */
+
 function PostListController(PostService){
 	var vm = this;
 
@@ -18,7 +18,4 @@ function PostListController(PostService){
 		});
 	}
 }
-
-
-
 })();
