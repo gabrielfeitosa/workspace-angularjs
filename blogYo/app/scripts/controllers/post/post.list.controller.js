@@ -6,13 +6,12 @@ PostListController.$inject = ['PostService'];
 
 function PostListController(PostService){
 	var vm = this;
-
 	iniciar();
 
 	//////////////////////
 
 	function iniciar(){
-		vm.posts = {};
+		vm.posts = [];
 		PostService.query().then(function(data){
 			vm.posts = data;
 		});

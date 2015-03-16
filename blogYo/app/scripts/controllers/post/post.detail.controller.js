@@ -3,9 +3,9 @@
 
 angular.module('blogYoApp').controller('PostDetailController',PostDetailController);
 
-PostDetailController.$inject = ['$window','MyModalFactory','PostService','AuthFactory','RouterFactory'];
+PostDetailController.$inject = ['ModalFactory','PostService','AuthFactory','RouterFactory'];
 
-function PostDetailController($window,MyModalFactory,PostService,AuthFactory,RouterFactory){
+function PostDetailController(ModalFactory,PostService,AuthFactory,RouterFactory){
 
 	var vm = this;
 
@@ -17,13 +17,14 @@ function PostDetailController($window,MyModalFactory,PostService,AuthFactory,Rou
 	/////////////////////////////////
 
 	function iniciar(){
+		vm.post = {};
 		PostService.get(RouterFactory.getParam('id')).then(function(data){
 			vm.post = data;
 		});
 	}
 
 	function deletar(){
-		MyModalFactory.show().result.then(function () {
+		ModalFactory.show().result.then(function () {
 			PostService.remove(vm.post.id);
 			RouterFactory.go('home');
 		});

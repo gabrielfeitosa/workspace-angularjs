@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 describe('Controller: PostListController', function () {
@@ -47,3 +48,4 @@ describe('Controller: PostListController', function () {
         [{id:0,usuario:'fulano',titulo:'Primeiro Post',texto:'Texto do primeiro post',dataRegistro:1425661464525}]);
   });
 });
+*/

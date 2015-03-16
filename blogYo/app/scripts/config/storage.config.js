@@ -2,7 +2,12 @@
 'use strict';
 
 angular.module('blogYoApp')
-.config(['localStorageServiceProvider', function(localStorageServiceProvider){
+.config(StorageConfig);
+
+StorageConfig.$inject = ['localStorageServiceProvider'];
+
+function StorageConfig(localStorageServiceProvider){
   localStorageServiceProvider.setPrefix('blogLs');
-}]);
+}
+
 })();

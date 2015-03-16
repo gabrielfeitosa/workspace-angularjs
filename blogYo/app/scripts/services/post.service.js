@@ -1,8 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blogYoApp')
-.factory('PostService',PostService);
+angular.module('blogYoApp').factory('PostService',PostService);
 
 PostService.$inject = ['$resource'];
 

@@ -1,8 +1,11 @@
 (function(){
 'use strict';
 
-angular.module('blogYoApp')
-.factory('MyModalFactory',['$modal', function($modal){
+angular.module('blogYoApp').factory('ModalFactory',ModalFactory);
+
+ModalFactory.$inject = ['$modal'];
+
+function ModalFactory($modal){
   var modal = $modal;
   modal.show = function(){
     var urlTemplate = 'views/components/';
@@ -15,5 +18,5 @@ angular.module('blogYoApp')
 		 });
   };
 	return modal;
-}]);
+}
 })();

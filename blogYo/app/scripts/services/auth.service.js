@@ -1,8 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blogYoApp')
-.factory('AuthService', AuthService);
+angular.module('blogYoApp').factory('AuthService', AuthService);
 
 AuthService.$inject = ['$resource'];
 function AuthService($resource){
