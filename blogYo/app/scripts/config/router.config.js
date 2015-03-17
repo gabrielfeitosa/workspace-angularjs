@@ -6,7 +6,6 @@ angular.module('blogYoApp')
 
   $httpProvider.defaults.withCredentials = true;
   $httpProvider.interceptors.push('HttpInterceptor');
-
   $urlRouterProvider.otherwise('/home');
 
   $stateProvider
@@ -39,5 +38,6 @@ angular.module('blogYoApp')
       controller: 'PostEditController',
       controllerAs: 'editCtrl'
     });
+
 }]);
 })();

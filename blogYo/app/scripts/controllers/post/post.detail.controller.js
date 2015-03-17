@@ -31,9 +31,6 @@ function PostDetailController(ModalFactory,PostService,AuthFactory,RouterFactory
 	}
 
 	function isEditable(){
-		if(angular.isUndefined(vm.post)){
-			return false;
-		}
 		return AuthFactory.isLogged() &&	(vm.post.usuario === AuthFactory.getUser().login);
 	}
 }
