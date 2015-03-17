@@ -7,15 +7,16 @@ ModalFactory.$inject = ['$modal'];
 
 function ModalFactory($modal){
   var modal = $modal;
-  modal.show = function(){
-    var urlTemplate = 'views/components/';
-    urlTemplate +='modalConfirm.html';
+  var urlTemplate = 'views/components/';
+
+  modal.showConfirmar = function(){
+    var url = urlTemplate+'modalConfirm.html';
     return $modal.open({
-		  templateUrl: urlTemplate,
+		  templateUrl: url,
 		  controller: 'ModalController',
       controllerAs: 'modalCtrl',
 		  size: 'sm'
-		 });
+    }).result;
   };
 	return modal;
 }

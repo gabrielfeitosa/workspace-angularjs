@@ -21,7 +21,5 @@ function ModalController($modalInstance){
 	function cancel(){
 		$modalInstance.dismiss('cancel');
 	}
-
-
 }
 })();

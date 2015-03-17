@@ -24,9 +24,17 @@ function PostDetailController(ModalFactory,PostService,AuthFactory,RouterFactory
 	}
 
 	function deletar(){
-		ModalFactory.show().result.then(function () {
-			PostService.remove(vm.post.id);
-			RouterFactory.go('home');
+		var promise = ModalFactory.showConfirmar();
+
+		promise.then(function (data) {
+			// PostService.remove(vm.post.id).then(function(){
+			// 	RouterFactory.go('home');
+			// });
+			vm.modalCancelado = false;
+			console.log(angular.toJson(data) + ' '+vm.modalCancelado);
+		},function(){
+			vm.modalCancelado = true;
+			console.log(vm.modalCancelado);
 		});
 	}
 
