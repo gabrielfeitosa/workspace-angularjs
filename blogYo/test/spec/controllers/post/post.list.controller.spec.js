@@ -3,22 +3,6 @@
 
  describe('Controller: PostListController', function(){
 
-    var customMatchers = {
-      toEqualData: function() {
-        return {
-          compare: function(actual, expected) {
-           var result = {};
-           result.pass = angular.equals(actual, expected);
-           return result;
-          }
-        };
-      }
-    };
-
-    beforeEach(function() {
-      jasmine.addMatchers(customMatchers);
-    });
-
     beforeEach(module('blogYoApp'));
 
     var $rootScope,ctrl,PostService,deferred;

@@ -3,53 +3,31 @@
 
  describe('Controller: PostDetailController', function(){
 
-   var customMatchers = {
-     toEqualData: function() {
-       return {
-         compare: function(actual, expected) {
-           var result = {};
-           result.pass = angular.equals(actual, expected);
-           return result;
-         }
-       };
-     }
-   };
+   var _post = {id:1,usuario:'fulano',titulo:'Primeiro Post',texto:'Texto do primeiro post',dataRegistro:1426506988126};
 
-   var $rootScope,deferred,state;
-
-   function getPostJson(){
-     var post = {id:1,usuario:'fulano',titulo:'Primeiro Post',texto:'Texto do primeiro post',dataRegistro:1426506988126};
-     return post;
-   }
-
-   function carregarPost(obj){
-     deferred.resolve(obj);
-     $rootScope.$apply();
-   }
-
+   var mockModalFactory,_mockPromiseModal;
    beforeEach(function() {
-       jasmine.addMatchers(customMatchers);
-       module('blogYoApp');
+       mockModalFactory = {
+           showConfirmar: function() {
+               return _mockPromiseModal;
+           }
+       };
    });
 
+  beforeEach(module('blogYoApp'));
+
+   var $rootScope,deferred,state;
    beforeEach(inject(function(_$state_,$q, _$rootScope_){
        state = _$state_;
        spyOn(state,'go');
        spyOn(state,'transitionTo');
        $rootScope = _$rootScope_;
        deferred = $q.defer();
-     }));
+     })
+   );
 
-   var spyPromise,ctrl,PostService,AuthFactory,RouterFactory,mockModalFactory;
 
-   beforeEach(function() {
-       mockModalFactory = {
-           showConfirmar: function() {
-               return deferred.promise;
-           }
-       };
-   });
-
+   var ctrl,PostService,AuthFactory,RouterFactory;
    beforeEach(inject(function($controller,_PostService_,_RouterFactory_,_AuthFactory_) {
      PostService = _PostService_;
      AuthFactory = _AuthFactory_;
@@ -60,48 +38,85 @@
      ctrl = $controller('PostDetailController',{ModalFactory: mockModalFactory});
    }));
 
-   it('deveria criar controlador com sucesso', function () {
-      expect(ctrl).toBeDefined();
+   describe('Validar injeção de dependência do controlador', function(){
+     it('deveria criar controlador com sucesso', function () {
+         expect(ctrl).toBeDefined();
+      });
    });
 
-   it('deveria possuir um post vazio', function() {
-      expect(ctrl.post).toEqualData({});
+   describe('Validar se post está sendo preenchido...',function(){
+     it('deveria possuir um post vazio', function() {
+       expect(ctrl.post).toEqualData({});
+     });
+
+     it('deveria preencher conteúdo no post', function() {
+       expect(ctrl.post).toEqualData({});
+       deferred.resolve(_post);
+       $rootScope.$apply();
+       expect(ctrl.post).toEqualData(_post);
+     });
    });
 
-   it('deveria preecher conteúdo no post', function() {
-    carregarPost(getPostJson());
-    expect(ctrl.post).toEqualData(getPostJson());
+   describe('Validar se post editável ou não...',function(){
+     it('deveria verificar que o post não é editável, usuário não está logado', function(){
+      ctrl.post = _post;
+      spyOn(AuthFactory, 'isLogged').and.returnValue(false);
+      expect(ctrl.isEditable()).toBeFalsy();
+     });
+
+     it('deveria verificar que o post não é editável, usuário não é proprietário do post', function(){
+       ctrl.post = _post;
+       spyOn(AuthFactory, 'isLogged').and.returnValue(true);
+       spyOn(AuthFactory, 'getUser').and.returnValue({login: 'alguem'});
+       expect(ctrl.isEditable()).toBeFalsy();
+     });
+
+     it('deveria verificar que o post é editável', function(){
+       ctrl.post = _post;
+       spyOn(AuthFactory, 'isLogged').and.returnValue(true);
+       spyOn(AuthFactory, 'getUser').and.returnValue({login: 'fulano'});
+       expect(ctrl.isEditable()).toBeTruthy();
+     });
    });
 
-   it('deveria verificar que o post não é editável, usuário não está logado', function(){
-    carregarPost(getPostJson());
-    spyOn(AuthFactory, 'isLogged').and.returnValue(false);
-    expect(ctrl.isEditable()).toBeFalsy();
+   describe('Validar a remoção de um post...', function(){
+     var mockPromiseSucesso = {
+       then: function(successFn, errorFn) {
+            successFn();
+        }
+     };
+     var mockPromiseErro = {
+       then: function(successFn, errorFn) {
+           expect(errorFn).toBeUndefined();
+         }
+     };
+     it('deveria tentar deletar o post, mas desistir da remoção', function(){
+       _mockPromiseModal = mockPromiseErro;
+        spyOn(PostService, 'remove');
+        spyOn(RouterFactory, 'go');
+        ctrl.deletar();
+        expect(PostService.remove).not.toHaveBeenCalled();
+        expect(RouterFactory.go).not.toHaveBeenCalled();
+     });
+
+     it('deveria tentar deletar o post,mas o serviço abortou a remoção', function(){
+       ctrl.post = _post;
+       _mockPromiseModal = mockPromiseSucesso;
+        spyOn(PostService, 'remove').and.returnValue(mockPromiseErro);
+        spyOn(RouterFactory, 'go');
+        ctrl.deletar();
+        expect(PostService.remove).toHaveBeenCalledWith(1);
+        expect(RouterFactory.go).not.toHaveBeenCalled();
+     });
+
+     it('deveria deletar o post e concluir a operação ',function(){
+       _mockPromiseModal = mockPromiseSucesso;
+       spyOn(PostService, 'remove').and.returnValue(mockPromiseSucesso);
+       spyOn(RouterFactory, 'go');
+       ctrl.deletar();
+       expect(RouterFactory.go).toHaveBeenCalledWith('home');
+     });
    });
 
-   it('deveria verificar que o post não é editável, usuário não é proprietário do post', function(){
-     carregarPost(getPostJson());
-     spyOn(AuthFactory, 'isLogged').and.returnValue(true);
-     spyOn(AuthFactory, 'getUser').and.returnValue({login: 'alguem'});
-     expect(ctrl.isEditable()).toBeFalsy();
-   });
-
-   it('deveria verificar que o post é editável', function(){
-     carregarPost(getPostJson());
-     spyOn(AuthFactory, 'isLogged').and.returnValue(true);
-     spyOn(AuthFactory, 'getUser').and.returnValue({login: 'fulano'});
-     expect(ctrl.isEditable()).toBeTruthy();
-   });
-
-   it('deveria tentar deletar o post e recusar', function(){
-     spyOn(mockModalFactory, 'showConfirmar').and.callThrough();
-    //  carregarPost(getPostJson());
-     expect(ctrl.modalCancelado).toBeUndefined();
-     ctrl.deletar();
-     deferred.reject();
-     $rootScope.$apply();
-     expect(ctrl.modalCancelado).toBeTruthy();
-
-   });
  });
  })();

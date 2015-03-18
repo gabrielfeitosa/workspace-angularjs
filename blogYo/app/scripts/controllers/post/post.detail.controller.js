@@ -24,22 +24,17 @@ function PostDetailController(ModalFactory,PostService,AuthFactory,RouterFactory
 	}
 
 	function deletar(){
-		var promise = ModalFactory.showConfirmar();
-
-		promise.then(function (data) {
-			// PostService.remove(vm.post.id).then(function(){
-			// 	RouterFactory.go('home');
-			// });
-			vm.modalCancelado = false;
-			console.log(angular.toJson(data) + ' '+vm.modalCancelado);
-		},function(){
-			vm.modalCancelado = true;
-			console.log(vm.modalCancelado);
+		ModalFactory.showConfirmar().then(function () {
+			PostService.remove(vm.post.id).then(function(){
+				RouterFactory.go('home');
+			});
 		});
+
 	}
 
 	function isEditable(){
-		return AuthFactory.isLogged() &&	(vm.post.usuario === AuthFactory.getUser().login);
+		return AuthFactory.isLogged() &&
+			(vm.post.usuario === AuthFactory.getUser().login);
 	}
 }
 })();
