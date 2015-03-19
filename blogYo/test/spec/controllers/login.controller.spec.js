@@ -3,10 +3,26 @@
 
 describe('Controlador: LoginController', function(){
 
+  var mockPromiseErro = {
+    then: function(successFn, errorFn) {
+        expect(errorFn).toBeUndefined();
+      }
+  };
+
+  var mockPromiseSucesso = {
+    then: function(successFn, errorFn) {
+        successFn(usuarioMock);
+      }
+  };
+
   beforeEach(module('blogYoApp'));
-  var ctrl,createController,scope;
-  beforeEach(inject(function($controller,$rootScope){
+  var usuarioMock = {login: 'gabrielfeitosa', email: 'gabfeitosa@gmail.com'};
+
+  var ctrl,createController,scope, AuthFactory;
+  beforeEach(inject(function($controller,$rootScope,_AuthFactory_){
     scope = $rootScope.$new();
+    AuthFactory = _AuthFactory_;
+
     createController = function(){
       return $controller('LoginController',{$scope: scope});
     }
@@ -18,12 +34,63 @@ describe('Controlador: LoginController', function(){
       expect(ctrl).toBeDefined();
     });
 
-    // it('watches the name and updates the counter', function () {
-    //         expect(scope.counter).toBe(0);
-    //         scope.name = 'Batman';
-    //         scope.$digest();
-    //         expect(scope.counter).toBe(1);
-    //     });
+    it('Usuário deveria ser vazio', function(){
+      expect(ctrl.user).toEqualData({});
+    });
+
+    it('Preencher usuário',function(){
+      expect(ctrl.user).toEqualData({});
+      spyOn(AuthFactory,'setUser');
+      usuarioMock = {login: 'gabrielfeitosa', email: 'gabfeitosa@gmail.com'};
+      ctrl.user = usuarioMock;
+      expect(AuthFactory.setUser).not.toHaveBeenCalled();
+      scope.$digest();
+      expect(AuthFactory.setUser).toHaveBeenCalledWith(usuarioMock);
+    });
+
+    it('Usuário já está logado', function(){
+      spyOn(AuthFactory,'getUser').and.returnValue(usuarioMock);
+      spyOn(AuthFactory,'setUser');
+      expect(ctrl.user).toEqualData({});
+      ctrl = createController();
+      expect(ctrl.user).toEqualData(usuarioMock);
+      expect(AuthFactory.setUser).not.toHaveBeenCalled();
+    });
+
+  });
+
+  describe('Validar as regras do controlador', function(){
+
+    it('Deveria retornar que não está logado', function(){
+      spyOn(AuthFactory,'isLogged').and.returnValue(false);
+      expect(ctrl.isLogged()).toBeFalsy();
+      expect(AuthFactory.isLogged).toHaveBeenCalled();
+    });
+
+    it('Deveria dar erro ao fazer login', function(){
+      spyOn(AuthFactory,'logar').and.returnValue(mockPromiseErro);
+      expect(ctrl.user).toEqualData({});
+      ctrl.doLogin('gabfeitosa@gmail.com','blog');
+      expect(ctrl.user).toEqualData({});
+      expect(AuthFactory.logar).toHaveBeenCalledWith('gabfeitosa@gmail.com','blog');
+    });
+
+    it('Deveria fazer login com sucesso', function(){
+      spyOn(AuthFactory,'logar').and.returnValue(mockPromiseSucesso);
+      expect(ctrl.user).toEqualData({});
+      ctrl.doLogin('gabfeitosa@gmail.com','blog');
+      expect(ctrl.user).toEqualData(usuarioMock);
+    });
+
+    it('Deveria fazer logout',function(){
+      spyOn(AuthFactory,'logout');
+      ctrl.user = usuarioMock;
+      expect(AuthFactory.logout).not.toHaveBeenCalled();
+      expect(ctrl.user).toEqualData(usuarioMock);
+      ctrl.doLogout();
+      expect(AuthFactory.logout).toHaveBeenCalled();
+      expect(ctrl.user).toEqualData({});
+    });
   });
 });
 })();

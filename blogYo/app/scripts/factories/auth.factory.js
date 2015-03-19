@@ -23,7 +23,7 @@ function AuthFactory(localStorageService,AuthService){
     },
     getUser: function(){
       var u = get();
-      return u || [];
+      return u || {};
     },
     isLogged: function(){
       return !angular.equals(angular.toJson(get()),'[]');
