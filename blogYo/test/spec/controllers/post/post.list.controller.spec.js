@@ -6,12 +6,13 @@
     beforeEach(module('blogYoApp'));
 
     var $rootScope,ctrl,PostService,deferred;
+    var postsMock = [{id:1,usuario:'fulano',titulo:'Primeiro Post',texto:'Texto do primeiro post',dataRegistro:1426506988126},
+             {id:2,usuario:'maria',titulo:'Outro Post',texto:'Mais um post para teste',dataRegistro:1426506988126}];
 
     beforeEach(inject(function ($q, _$rootScope_) {
         $rootScope = _$rootScope_;
         deferred = $q.defer();
-        deferred.resolve([{id:1,usuario:'fulano',titulo:'Primeiro Post',texto:'Texto do primeiro post',dataRegistro:1426506988126},
-                 {id:2,usuario:'maria',titulo:'Outro Post',texto:'Mais um post para teste',dataRegistro:1426506988126}]); //  always resolved, you can do it from your spec
+        deferred.resolve(postsMock);
       })
     );
 
@@ -33,8 +34,7 @@
    it('deveria adicionar 2 post na lista de posts', function() {
       $rootScope.$apply();
       expect(ctrl.posts.length).toEqual(2);
-      expect(ctrl.posts).toEqualData([{id:1,usuario:'fulano',titulo:'Primeiro Post',texto:'Texto do primeiro post',dataRegistro:1426506988126},
-               {id:2,usuario:'maria',titulo:'Outro Post',texto:'Mais um post para teste',dataRegistro:1426506988126}]);
+      expect(ctrl.posts).toEqualData(postsMock);
    });
  });
  })();

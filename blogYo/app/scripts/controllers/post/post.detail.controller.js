@@ -20,6 +20,8 @@ function PostDetailController(ModalFactory,PostService,AuthFactory,RouterFactory
 		vm.post = {};
 		PostService.get(RouterFactory.getParam('id')).then(function(data){
 			vm.post = data;
+		}, function(err){
+			RouterFactory.go('home');
 		});
 	}
 

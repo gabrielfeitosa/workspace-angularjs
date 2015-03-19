@@ -3,7 +3,7 @@
 
  describe('Controller: PostDetailController', function(){
 
-   var _post = {id:1,usuario:'fulano',titulo:'Primeiro Post',texto:'Texto do primeiro post',dataRegistro:1426506988126};
+   var postMock = {id:1,usuario:'fulano',titulo:'Primeiro Post',texto:'Texto do primeiro post',dataRegistro:1426506988126};
 
    var mockModalFactory,_mockPromiseModal;
    beforeEach(function() {
@@ -45,34 +45,43 @@
    });
 
    describe('Validar se post está sendo preenchido...',function(){
-     it('deveria possuir um post vazio', function() {
+     it('post deveria estar vazio', function() {
        expect(ctrl.post).toEqualData({});
      });
 
      it('deveria preencher conteúdo no post', function() {
        expect(ctrl.post).toEqualData({});
-       deferred.resolve(_post);
+       deferred.resolve(postMock);
        $rootScope.$apply();
-       expect(ctrl.post).toEqualData(_post);
+       expect(ctrl.post).toEqualData(postMock);
+     });
+
+     it('deveria voltar a tela inicial, pois houve erro ao buscar post', function(){
+       spyOn(RouterFactory, 'go');
+       expect(ctrl.post).toEqualData({});
+       deferred.reject();
+       $rootScope.$apply();
+       expect(ctrl.post).toEqualData({});
+       expect(RouterFactory.go).toHaveBeenCalledWith('home');
      });
    });
 
    describe('Validar se post editável ou não...',function(){
      it('deveria verificar que o post não é editável, usuário não está logado', function(){
-      ctrl.post = _post;
+      ctrl.post = postMock;
       spyOn(AuthFactory, 'isLogged').and.returnValue(false);
       expect(ctrl.isEditable()).toBeFalsy();
      });
 
      it('deveria verificar que o post não é editável, usuário não é proprietário do post', function(){
-       ctrl.post = _post;
+       ctrl.post = postMock;
        spyOn(AuthFactory, 'isLogged').and.returnValue(true);
        spyOn(AuthFactory, 'getUser').and.returnValue({login: 'alguem'});
        expect(ctrl.isEditable()).toBeFalsy();
      });
 
      it('deveria verificar que o post é editável', function(){
-       ctrl.post = _post;
+       ctrl.post = postMock;
        spyOn(AuthFactory, 'isLogged').and.returnValue(true);
        spyOn(AuthFactory, 'getUser').and.returnValue({login: 'fulano'});
        expect(ctrl.isEditable()).toBeTruthy();
@@ -100,7 +109,7 @@
      });
 
      it('deveria tentar deletar o post,mas o serviço abortou a remoção', function(){
-       ctrl.post = _post;
+       ctrl.post = postMock;
        _mockPromiseModal = mockPromiseSucesso;
         spyOn(PostService, 'remove').and.returnValue(mockPromiseErro);
         spyOn(RouterFactory, 'go');

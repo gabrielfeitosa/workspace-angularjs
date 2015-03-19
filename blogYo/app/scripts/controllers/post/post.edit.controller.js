@@ -15,7 +15,7 @@ function PostEditController(PostService,RouterFactory) {
 	/////////////////////////////////
 	function iniciar(){
 		vm.post = {};
-		var id =RouterFactory.getParam('id');
+		var id = RouterFactory.getParam('id');
 		if(id){
 			PostService.get(id).then(function(data){
 				vm.post = data;
@@ -32,18 +32,18 @@ function PostEditController(PostService,RouterFactory) {
 	}
 
 	function update(){
-		PostService.update(vm.post);
-		var id = vm.post.id;
-		vm.post = {};
-		RouterFactory.go('post.detail',{ 'id': id});
+		PostService.update(vm.post).then(function(data){
+			var id = vm.post.id;
+			vm.post = {};
+			RouterFactory.go('post.detail',{ 'id': id});
+		});
 	}
 
 	function save() {
 		PostService.save(vm.post).then(function(){
+			vm.post = {};
 			RouterFactory.go('home');
 		});
-		vm.post = {};
-
 	}
 }
 })();

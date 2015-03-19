@@ -3,9 +3,9 @@
 
 angular.module('blogYoApp').controller('ComentarioController', ComentarioController);
 
-ComentarioController.$inject = ['$stateParams','ComentarioService'];
+ComentarioController.$inject = ['RouterFactory','ComentarioService'];
 
-function ComentarioController($stateParams,ComentarioService) {
+function ComentarioController(RouterFactory,ComentarioService) {
   var vm = this;
 
   vm.adicionarComentario = adicionarComentario;
@@ -16,13 +16,13 @@ function ComentarioController($stateParams,ComentarioService) {
 
   function iniciar(){
     vm.comentario = {};
-    ComentarioService.query($stateParams.id).then(function(data){
+    ComentarioService.query(RouterFactory.getParam('id')).then(function(data){
       vm.comentarios = data;
     });
   }
 
   function adicionarComentario(){
-    ComentarioService.save($stateParams.id,vm.comentario).then(function(data){
+    ComentarioService.save(RouterFactory.getParam('id'),vm.comentario).then(function(data){
       if(!vm.comentarios){
           vm.comentarios= [];
       }

@@ -1,6 +1,7 @@
 (function(){
  'use strict';
  beforeEach(function() {
+
    var customMatchers = {
      toEqualData: function() {
        return {
