@@ -9,7 +9,11 @@ AuthFactory.$inject = ['localStorageService','AuthService'];
 function AuthFactory(localStorageService,AuthService){
 
   function get(){
-    return localStorageService.get('user');
+    var user = localStorageService.get('user');
+    if(user === null){
+      user = {};
+    }
+    return user;
   }
 
   return {
@@ -17,16 +21,15 @@ function AuthFactory(localStorageService,AuthService){
       return AuthService.logar(email,pass);
     },
     logout: function(){
-      AuthService.logout().then(function(res){
-        console.log('AuthFactory.logout: '+angular.toJson(res));
+      AuthService.logout().then(function(){
+        localStorageService.remove('user');
       });
     },
     getUser: function(){
-      var u = get();
-      return u || {};
+      return get();
     },
     isLogged: function(){
-      return !angular.equals(angular.toJson(get()),'[]');
+      return !angular.equals(angular.toJson(get()),'{}');
     },
     setUser: function(u){
       localStorageService.set('user',u);
