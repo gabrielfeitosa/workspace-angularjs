@@ -10,13 +10,13 @@ describe('Controlador: LoginController', function(){
   };
 
   var mockPromiseSucesso = {
-    then: function(successFn, errorFn) {
+    then: function(successFn) {
         successFn(usuarioMock);
       }
   };
 
   beforeEach(module('blogYoApp'));
-  var usuarioMock = {login: 'gabrielfeitosa', email: 'gabfeitosa@gmail.com'};
+  var usuarioMock = {login: 'gabrielfeitosa', email: 'test@xpto.tt'};
 
   var ctrl,createController,scope, AuthFactory;
   beforeEach(inject(function($controller,$rootScope,_AuthFactory_){
@@ -25,7 +25,7 @@ describe('Controlador: LoginController', function(){
 
     createController = function(){
       return $controller('LoginController',{$scope: scope});
-    }
+    };
     ctrl = createController();
   }));
 
@@ -41,7 +41,7 @@ describe('Controlador: LoginController', function(){
     it('Preencher usuário',function(){
       expect(ctrl.user).toEqualData({});
       spyOn(AuthFactory,'setUser');
-      usuarioMock = {login: 'gabrielfeitosa', email: 'gabfeitosa@gmail.com'};
+      usuarioMock = {login: 'gabrielfeitosa', email: 'test@xpto.tt'};
       ctrl.user = usuarioMock;
       expect(AuthFactory.setUser).not.toHaveBeenCalled();
       scope.$digest();
@@ -70,15 +70,15 @@ describe('Controlador: LoginController', function(){
     it('Deveria dar erro ao fazer login', function(){
       spyOn(AuthFactory,'logar').and.returnValue(mockPromiseErro);
       expect(ctrl.user).toEqualData({});
-      ctrl.doLogin('gabfeitosa@gmail.com','blog');
+      ctrl.doLogin('test@xpto.tt','blog');
       expect(ctrl.user).toEqualData({});
-      expect(AuthFactory.logar).toHaveBeenCalledWith('gabfeitosa@gmail.com','blog');
+      expect(AuthFactory.logar).toHaveBeenCalledWith('test@xpto.tt','blog');
     });
 
     it('Deveria fazer login com sucesso', function(){
       spyOn(AuthFactory,'logar').and.returnValue(mockPromiseSucesso);
       expect(ctrl.user).toEqualData({});
-      ctrl.doLogin('gabfeitosa@gmail.com','blog');
+      ctrl.doLogin('test@xpto.tt','blog');
       expect(ctrl.user).toEqualData(usuarioMock);
     });
 

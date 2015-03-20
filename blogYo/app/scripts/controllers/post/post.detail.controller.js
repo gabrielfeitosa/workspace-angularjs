@@ -31,7 +31,6 @@ function PostDetailController(ModalFactory,PostService,AuthFactory,RouterFactory
 				RouterFactory.go('home');
 			});
 		});
-
 	}
 
 	function isEditable(){

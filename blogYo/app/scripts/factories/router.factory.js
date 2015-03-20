@@ -13,6 +13,9 @@ function RouterFactory($state,$stateParams){
     },
     getParam: function(param){
       return $stateParams[param];
+    },
+    isState: function(state){
+      return $state.is(state);
     }
   };
 }

@@ -2,9 +2,9 @@
 'use strict';
 angular.module('blogYoApp').controller('NavController',NavController);
 
-NavController.$inject = ['$state'];
+NavController.$inject = ['RouterFactory'];
 
-function NavController($state) {
+function NavController(RouterFactory) {
 	var vm = this;
 
 	vm.activeClass = activeClass;
@@ -18,7 +18,7 @@ function NavController($state) {
 	}
 
 	function activeClass(state){
-		return $state.is(state);
+		return RouterFactory.isState(state);
 	}
 }
 })();

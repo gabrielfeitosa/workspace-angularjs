@@ -8,7 +8,7 @@ ModalController.$inject = ['$modalInstance'];
 function ModalController($modalInstance){
 
 	var vm = this;
-
+	
 	vm.ok = ok;
 	vm.cancel = cancel;
 
