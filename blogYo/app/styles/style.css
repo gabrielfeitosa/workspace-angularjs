@@ -1,3 +1,12 @@
+.ta-scroll-window.form-control {
+  min-height: 400px;
+	max-height: 400px;
+  height: auto;
+  overflow: auto;
+  font-family: inherit;
+  font-size: 100%;
+}
+
 .comentarios ul, .comentarios ol, .comentarios li {
 	list-style: none;
 }

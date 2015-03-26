@@ -7,9 +7,8 @@ LoginController.$inject = ['$scope','AuthFactory'];
 
 function LoginController($scope,AuthFactory){
   var vm = this;
-  vm.user = AuthFactory.getUser();
 
-  vm.isLogged = isLogged;
+  vm.isLogado = isLogado;
   vm.doLogin = doLogin;
   vm.doLogout = doLogout;
 
@@ -17,26 +16,19 @@ function LoginController($scope,AuthFactory){
 
   //////////////////////////
   function iniciar(){
-    $scope.$watch(function() {
-      return vm.user;
-    }, function(newValue) {
-      AuthFactory.setUser(newValue);
-    });
+    vm.user = AuthFactory.getUser();
   }
 
-  function isLogged(){
-    return AuthFactory.isLogged();
+  function isLogado(){
+    return AuthFactory.isLogado();
   }
 
 	function doLogin(email,pass){
-    AuthFactory.logar(email, pass).then(function(data){
-      vm.user = data;
-    });
+    AuthFactory.logar(email, pass);
   }
 
   function doLogout(){
     AuthFactory.logout();
-    vm.user = {};
   }
 }
 })();

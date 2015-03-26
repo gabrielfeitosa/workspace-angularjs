@@ -16,6 +16,9 @@ function RouterFactory($state,$stateParams){
     },
     isState: function(state){
       return $state.is(state);
+    },
+    reload: function(){
+      $state.go($state.current, {}, {reload: true});
     }
   };
 }

@@ -3,9 +3,9 @@
 
 angular.module('blogYoApp').controller('PostDetailController',PostDetailController);
 
-PostDetailController.$inject = ['ModalFactory','PostService','AuthFactory','RouterFactory'];
+PostDetailController.$inject = ['ModalFactory','PostService','AuthFactory','RouterFactory','$log'];
 
-function PostDetailController(ModalFactory,PostService,AuthFactory,RouterFactory){
+function PostDetailController(ModalFactory,PostService,AuthFactory,RouterFactory,$log){
 
 	var vm = this;
 
@@ -21,6 +21,7 @@ function PostDetailController(ModalFactory,PostService,AuthFactory,RouterFactory
 		PostService.get(RouterFactory.getParam('id')).then(function(data){
 			vm.post = data;
 		}, function(err){
+			$log.debug(' Erro ao iniciar o detalhamento do post: '+angular.toJson(err));
 			RouterFactory.go('home');
 		});
 	}
@@ -34,7 +35,7 @@ function PostDetailController(ModalFactory,PostService,AuthFactory,RouterFactory
 	}
 
 	function isEditable(){
-		return AuthFactory.isLogged() &&
+		return AuthFactory.isLogado() &&
 			(vm.post.usuario === AuthFactory.getUser().login);
 	}
 }

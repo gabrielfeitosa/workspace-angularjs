@@ -6,18 +6,9 @@
       var fakeModal = {
          result: {
              then: function(confirmCallback, cancelCallback) {
-                 //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
                  this.confirmCallBack = confirmCallback;
                  this.cancelCallback = cancelCallback;
              }
-         },
-         close: function( item ) {
-             //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
-             this.result.confirmCallBack( item );
-         },
-         dismiss: function( type ) {
-             //The user clicked cancel on the modal dialog, call the stored cancel callback
-             this.result.cancelCallback( type );
          }
       };
 
@@ -35,8 +26,14 @@
 
       describe('Validar funcionalidades da Factory', function(){
         var mockPromiseSucesso = {
-          then: function(successFn,nok) {
-            nok({});
+          then: function(successFn) {
+            successFn('ok');
+            }
+        };
+
+        var mockPromiseErro = {
+          then: function(successFn,erroFn) {
+            erroFn('nok');
             }
         };
         it('Deveria instanciar a factory',function(){
@@ -45,12 +42,17 @@
 
         it('Deveria confirmar a função showConfirmar', function(){
           spyOn(modalFactory,'showConfirmar').and.returnValue(mockPromiseSucesso);
-          modalFactory.showConfirmar().then(function(){
-            console.log('ddd');
-          }, function(){
-            console.log('dkldkl');
+          modalFactory.showConfirmar().then(function(data){
+            expect(data).toMatch('ok');
           });
+        });
 
+        it('Deveria cancelar a função showConfirmar', function(){
+          spyOn(modalFactory,'showConfirmar').and.returnValue(mockPromiseErro);
+          modalFactory.showConfirmar().then(function(){},
+          function(err){
+            expect(err).toMatch('nok');
+          });
         });
 
       });

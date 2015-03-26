@@ -8,6 +8,7 @@ angular.module('blogYoApp', [
     'ui.router',
     'ui.bootstrap',
     'LocalStorageModule',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'textAngular'
 ]);
 })();

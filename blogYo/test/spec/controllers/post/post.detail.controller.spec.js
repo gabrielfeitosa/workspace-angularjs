@@ -69,20 +69,20 @@
    describe('Validar se post editável ou não...',function(){
      it('deveria verificar que o post não é editável, usuário não está logado', function(){
       ctrl.post = postMock;
-      spyOn(AuthFactory, 'isLogged').and.returnValue(false);
+      spyOn(AuthFactory, 'isLogado').and.returnValue(false);
       expect(ctrl.isEditable()).toBeFalsy();
      });
 
      it('deveria verificar que o post não é editável, usuário não é proprietário do post', function(){
        ctrl.post = postMock;
-       spyOn(AuthFactory, 'isLogged').and.returnValue(true);
+       spyOn(AuthFactory, 'isLogado').and.returnValue(true);
        spyOn(AuthFactory, 'getUser').and.returnValue({login: 'alguem'});
        expect(ctrl.isEditable()).toBeFalsy();
      });
 
      it('deveria verificar que o post é editável', function(){
        ctrl.post = postMock;
-       spyOn(AuthFactory, 'isLogged').and.returnValue(true);
+       spyOn(AuthFactory, 'isLogado').and.returnValue(true);
        spyOn(AuthFactory, 'getUser').and.returnValue({login: 'fulano'});
        expect(ctrl.isEditable()).toBeTruthy();
      });

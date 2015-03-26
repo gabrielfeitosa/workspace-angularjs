@@ -1,9 +1,9 @@
 <meta charset="UTF-8">
 <div>
-  <div class="blog-post" ng-repeat="post in vm.posts">
+  <div class="blog-post" ng-animate="'animate'" ng-repeat="post in vm.posts">
    <h2 class="blog-post-title clicavel" ui-sref="post.detail({id: post.id})">{{post.titulo}}</h2>
    <p class="blog-post-meta">{{post.dataRegistro | date}} by <a href="#">{{post.usuario}}</a></p>
-   <p>{{post.texto | limitarTexto: 500 }}</p>
+   <div ng-bind-html="post.texto"/>
   </div><!-- /.blog-post -->
 
      <!--

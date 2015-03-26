@@ -10,11 +10,15 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/textAngular/src/textAngular.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" type="text/css" href="styles/style.css">
     <link rel="stylesheet" type="text/css" href="styles/blog.css">
+    <link rel="stylesheet" type="text/css" href="styles/animations.css">
     <link rel="stylesheet" type="text/css" href="styles/lib/loading-bar.css">
     <!-- endbuild -->
   </head>
@@ -32,7 +36,7 @@
            <a class="blog-nav-item" ng-repeat="m in nav.menu" ui-sref="{{m.state}}" ng-class="{ 'active': nav.activeClass(m.state) }">{{m.item}}</a>
           </span>
           <form class="navbar-form navbar-right" ng-controller="LoginController as loginCtrl">
-           <span ng-if="!loginCtrl.isLogged()">
+           <span ng-if="!loginCtrl.isLogado()">
              <div class="form-group">
                <input type="text" placeholder="Email" class="form-control" ng-model="email">
              </div>
@@ -41,7 +45,7 @@
              </div>
              <button type="submit" ng-click="loginCtrl.doLogin(email,pass);" class="btn btn-success">Sign in</button>
            </span>
-           <span ng-if="loginCtrl.isLogged()">
+           <span ng-if="loginCtrl.isLogado()">
              <div class="form-group">
                <label style="color: #ffffff;margin-right:5px;" >Olá, {{loginCtrl.user.nome}}</label>
              </div>
@@ -62,7 +66,7 @@
 
       <div class="row">
         <div class="col-sm-8 blog-main">
-           <div ui-view></div>
+           <div ui-view class="view-frame"> </div>
        </div>
 
 
@@ -103,14 +107,21 @@
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/rangy/rangy-core.min.js"></script>
+    <script src="bower_components/rangy/rangy-cssclassapplier.min.js"></script>
+    <script src="bower_components/rangy/rangy-selectionsaverestore.min.js"></script>
+    <script src="bower_components/rangy/rangy-serializer.min.js"></script>
+    <script src="bower_components/textAngular/src/textAngular.js"></script>
+    <script src="bower_components/textAngular/src/textAngular-sanitize.js"></script>
+    <script src="bower_components/textAngular/src/textAngularSetup.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

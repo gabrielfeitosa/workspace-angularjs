@@ -2,9 +2,9 @@
 'use strict';
 angular.module('blogYoApp').controller('PostEditController', PostEditController);
 
-PostEditController.$inject = ['PostService','RouterFactory'];
+PostEditController.$inject = ['PostService','RouterFactory','AuthFactory'];
 
-function PostEditController(PostService,RouterFactory) {
+function PostEditController(PostService,RouterFactory,AuthFactory) {
 
 	var vm = this;
 
@@ -20,6 +20,8 @@ function PostEditController(PostService,RouterFactory) {
 			PostService.get(id).then(function(data){
 				vm.post = data;
 			});
+		}else if(AuthFactory.isLogado()){
+			vm.post.usuario = AuthFactory.getUser().login;
 		}
 	}
 
@@ -32,7 +34,7 @@ function PostEditController(PostService,RouterFactory) {
 	}
 
 	function update(){
-		PostService.update(vm.post).then(function(data){
+		PostService.update(vm.post).then(function(){
 			var id = vm.post.id;
 			vm.post = {};
 			RouterFactory.go('post.detail',{ 'id': id});

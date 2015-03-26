@@ -3,18 +3,6 @@
 
 describe('Controlador: LoginController', function(){
 
-  var mockPromiseErro = {
-    then: function(successFn, errorFn) {
-        expect(errorFn).toBeUndefined();
-      }
-  };
-
-  var mockPromiseSucesso = {
-    then: function(successFn) {
-        successFn(usuarioMock);
-      }
-  };
-
   beforeEach(module('blogYoApp'));
   var usuarioMock = {login: 'gabrielfeitosa', email: 'test@xpto.tt'};
 
@@ -38,23 +26,13 @@ describe('Controlador: LoginController', function(){
       expect(ctrl.user).toEqualData({});
     });
 
-    it('Preencher usuário',function(){
-      expect(ctrl.user).toEqualData({});
-      spyOn(AuthFactory,'setUser');
-      usuarioMock = {login: 'gabrielfeitosa', email: 'test@xpto.tt'};
-      ctrl.user = usuarioMock;
-      expect(AuthFactory.setUser).not.toHaveBeenCalled();
-      scope.$digest();
-      expect(AuthFactory.setUser).toHaveBeenCalledWith(usuarioMock);
-    });
 
     it('Usuário já está logado', function(){
       spyOn(AuthFactory,'getUser').and.returnValue(usuarioMock);
-      spyOn(AuthFactory,'setUser');
       expect(ctrl.user).toEqualData({});
       ctrl = createController();
       expect(ctrl.user).toEqualData(usuarioMock);
-      expect(AuthFactory.setUser).not.toHaveBeenCalled();
+      expect(AuthFactory.getUser).toHaveBeenCalled();
     });
 
   });
@@ -62,13 +40,13 @@ describe('Controlador: LoginController', function(){
   describe('Validar as regras do controlador', function(){
 
     it('Deveria retornar que não está logado', function(){
-      spyOn(AuthFactory,'isLogged').and.returnValue(false);
-      expect(ctrl.isLogged()).toBeFalsy();
-      expect(AuthFactory.isLogged).toHaveBeenCalled();
+      spyOn(AuthFactory,'isLogado').and.returnValue(false);
+      expect(ctrl.isLogado()).toBeFalsy();
+      expect(AuthFactory.isLogado).toHaveBeenCalled();
     });
 
     it('Deveria dar erro ao fazer login', function(){
-      spyOn(AuthFactory,'logar').and.returnValue(mockPromiseErro);
+      spyOn(AuthFactory,'logar');
       expect(ctrl.user).toEqualData({});
       ctrl.doLogin('test@xpto.tt','blog');
       expect(ctrl.user).toEqualData({});
@@ -76,10 +54,9 @@ describe('Controlador: LoginController', function(){
     });
 
     it('Deveria fazer login com sucesso', function(){
-      spyOn(AuthFactory,'logar').and.returnValue(mockPromiseSucesso);
-      expect(ctrl.user).toEqualData({});
+      spyOn(AuthFactory,'logar');
       ctrl.doLogin('test@xpto.tt','blog');
-      expect(ctrl.user).toEqualData(usuarioMock);
+      expect(AuthFactory.logar).toHaveBeenCalledWith('test@xpto.tt','blog');
     });
 
     it('Deveria fazer logout',function(){
@@ -89,7 +66,6 @@ describe('Controlador: LoginController', function(){
       expect(ctrl.user).toEqualData(usuarioMock);
       ctrl.doLogout();
       expect(AuthFactory.logout).toHaveBeenCalled();
-      expect(ctrl.user).toEqualData({});
     });
   });
 });
