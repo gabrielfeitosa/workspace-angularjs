@@ -12,7 +12,7 @@
       };
 
       var mockPromiseSucesso = {
-        then: function(successFn, errorFn) {
+        then: function(successFn) {
             successFn({});
           }
       };
@@ -23,7 +23,7 @@
         ComentarioService = _ComentarioService_;
         createController = function(){
           return $controller('ComentarioController');
-        }
+        };
         ctrl = createController();
       }));
 
@@ -49,7 +49,7 @@
         describe('Adicionando o parâmetro id da rota',function(){
           beforeEach(function(){
             spyOn(RouterFactory,'getParam').and.returnValue(1);
-          })
+          });
 
           it('Deveria dar erro no serviço query', function(){
             expect(ctrl.comentarios).toBeUndefined();

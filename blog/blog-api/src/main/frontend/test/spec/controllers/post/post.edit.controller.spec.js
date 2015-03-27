@@ -12,7 +12,7 @@
       };
 
       var mockPromiseSucesso = {
-        then: function(successFn, errorFn) {
+        then: function(successFn) {
             successFn({});
           }
       };
@@ -25,7 +25,7 @@
         spyOn(RouterFactory, 'go');
         createCtrl = function(){
           return $controller('PostEditController');
-        }
+        };
         ctrl = createCtrl();
       }));
 
@@ -48,7 +48,7 @@
           spyOn(PostService,'save').and.returnValue(mockPromiseErro);
           ctrl.salvar();
           expect(RouterFactory.go).not.toHaveBeenCalled();
-        })
+        });
 
         it('deveria salvar o post com sucesso', function(){
           spyOn(PostService,'save').and.returnValue(mockPromiseSucesso);
@@ -64,7 +64,7 @@
 
         it('post deveria estar preenchido',function(){
           spyOn(RouterFactory,'getParam').and.returnValue(1);
-          spyOn(PostService,'get').and.returnValue({then: function(successFn){successFn(postMock)}});
+          spyOn(PostService,'get').and.returnValue({then: function(successFn){successFn(postMock);}});
           ctrl = createCtrl();
           expect(ctrl.post).toEqualData(postMock);
         });

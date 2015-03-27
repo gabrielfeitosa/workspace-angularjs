@@ -114,17 +114,6 @@
 						</goals>
 						
 					</execution>
-
-					<execution>
-						<id>javascript tests</id>
-						<goals>
-							<goal>karma</goal>
-						</goals>
-						<configuration>
-							<karmaConfPath>test/karma.conf.js</karmaConfPath>
-						</configuration>
-					</execution>
-
 				</executions>
 			</plugin>
 

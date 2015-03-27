@@ -90,7 +90,7 @@
 
    describe('Validar a remoção de um post...', function(){
      var mockPromiseSucesso = {
-       then: function(successFn, errorFn) {
+       then: function(successFn) {
             successFn();
         }
      };
