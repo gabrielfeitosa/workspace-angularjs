@@ -2,9 +2,9 @@
 'use strict';
 angular.module('blogYoApp').controller('PostEditController', PostEditController);
 
-PostEditController.$inject = ['PostService','RouterFactory','AuthFactory'];
+PostEditController.$inject = ['PostService','RouterFactory','AuthFactory','toastr'];
 
-function PostEditController(PostService,RouterFactory,AuthFactory) {
+function PostEditController(PostService,RouterFactory,AuthFactory,toastr) {
 
 	var vm = this;
 
@@ -37,6 +37,7 @@ function PostEditController(PostService,RouterFactory,AuthFactory) {
 		PostService.update(vm.post).then(function(){
 			var id = vm.post.id;
 			vm.post = {};
+			toastr.success('Atualizado...');
 			RouterFactory.go('post.detail',{ 'id': id});
 		});
 	}
@@ -44,6 +45,7 @@ function PostEditController(PostService,RouterFactory,AuthFactory) {
 	function save() {
 		PostService.save(vm.post).then(function(){
 			vm.post = {};
+			toastr.success('Novo post na parada \\o/');
 			RouterFactory.go('home');
 		});
 	}

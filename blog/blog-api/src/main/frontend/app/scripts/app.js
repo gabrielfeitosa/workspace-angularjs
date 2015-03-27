@@ -12,4 +12,15 @@ angular.module('blogYoApp', [
     'textAngular'
 ])
 .constant('urlApi', 'blog-api/api/');
+
+/* jshint ignore:start */
+toastr.options = {
+  'closeButton': true,
+  'progressBar': true,
+  'positionClass': 'toast-top-right',
+  'timeOut': '4000'
+};
+angular.module('blogYoApp').constant('toastr', toastr);
+/* jshint ignore:end */
+
 })();
