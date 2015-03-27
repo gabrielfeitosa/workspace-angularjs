@@ -10,5 +10,6 @@ angular.module('blogYoApp', [
     'LocalStorageModule',
     'angular-loading-bar',
     'textAngular'
-]);
+])
+.constant('urlApi', 'blog-api/api/');
 })();

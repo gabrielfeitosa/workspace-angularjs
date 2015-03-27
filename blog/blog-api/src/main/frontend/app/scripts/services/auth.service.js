@@ -3,9 +3,9 @@
 
 angular.module('blogYoApp').factory('AuthService', AuthService);
 
-AuthService.$inject = ['$resource'];
-function AuthService($resource){
-  var resource = $resource('blog-api/auth/:event',{event:''},{
+AuthService.$inject = ['$resource','urlApi'];
+function AuthService($resource,urlApi){
+  var resource = $resource(urlApi+'auth/:event',{event:''},{
     logar : {
         method : 'POST',
         params: {

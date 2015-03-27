@@ -11,7 +11,7 @@
 
 	<servlet-mapping>
 		<servlet-name>com.gabrielfeitosa.blog.service.ApplicationJAXRS</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>

@@ -3,11 +3,11 @@
 
 angular.module('blogYoApp').factory('ComentarioService',ComentarioService);
 
-ComentarioService.$inject = ['$resource'];
+ComentarioService.$inject = ['$resource','urlApi'];
 
-function ComentarioService($resource){
+function ComentarioService($resource,urlApi){
 
-  var resource = $resource('blog-api/posts/:id/comentarios',{},{
+  var resource = $resource(urlApi+'posts/:id/comentarios',{},{
   });
 
   function promise(ch){
