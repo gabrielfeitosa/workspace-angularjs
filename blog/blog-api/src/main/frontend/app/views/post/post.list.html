@@ -1,0 +1,17 @@
+<meta charset="UTF-8">
+<div>
+  <div class="blog-post" ng-animate="'animate'" ng-repeat="post in vm.posts">
+   <h2 class="blog-post-title clicavel" ui-sref="post.detail({id: post.id})">{{post.titulo}}</h2>
+   <p class="blog-post-meta">{{post.dataRegistro | date}} by <a href="#">{{post.usuario}}</a></p>
+   <div ng-bind-html="post.texto" class="blog-post-list-view"/>
+  </div><!-- /.blog-post -->
+
+     <!--
+     <nav>
+       <ul class="pager">
+         <li><a href="#">Previous</a></li>
+         <li><a href="#">Next</a></li>
+       </ul>
+     </nav>
+-->
+   </div><!-- /.blog-main -->

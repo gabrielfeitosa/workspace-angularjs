@@ -13,33 +13,123 @@
 
 	<properties>
 		<jersey.version>2.4.1</jersey.version>
+		<version.war.plugin>2.1.1</version.war.plugin>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- maven-compiler-plugin -->
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.7</maven.compiler.source>
 	</properties>
 
 	<build>
-		<finalName>blog-api</finalName>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.4</version>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${version.war.plugin}</version>
 				<configuration>
-					<compilerVersion>1.7</compilerVersion>
-					<source>1.7</source>
-					<target>1.7</target>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<webResources>
+						<resource>
+							<!-- this is relative to the pom.xml directory -->
+							<directory>src/main/frontend/dist</directory>
+						</resource>
+					</webResources>
 				</configuration>
+				<executions>
+					<execution>
+						<id>prepare-war</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<archiveClasses>false</archiveClasses>
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+									<classpathPrefix />
+								</manifest>
+								<manifestEntries>
+									<Implementation-Build>${build.number}</Implementation-Build>
+									<Implementation-Title>${project.name}</Implementation-Title>
+									<Built-By>${user.name}</Built-By>
+									<Built-OS>${os.name}</Built-OS>
+									<Build-Date>${build.date}</Build-Date>
+								</manifestEntries>
+							</archive>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
+
+
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>tomcat-maven-plugin</artifactId>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<!-- NB! Set <version> to the latest released version of frontend-maven-plugin, 
+					like in README.md -->
+				<version>0.0.23</version>
+
 				<configuration>
-					<url>http://localhost:8080/manager/text</url>
-					<server>tomcat7</server>
-					<path>/${project.build.finalName}</path>
+					<workingDirectory>src/main/frontend</workingDirectory>
 				</configuration>
+
+				<executions>
+
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v0.10.36</nodeVersion>
+							<npmVersion>2.1.5</npmVersion>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<!-- Optional configuration which provides for running any npm command -->
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>bower install</id>
+						<goals>
+							<goal>bower</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>grunt build</id>
+						<goals>
+							<goal>grunt</goal>
+						</goals>
+						
+					</execution>
+
+					<execution>
+						<id>javascript tests</id>
+						<goals>
+							<goal>karma</goal>
+						</goals>
+						<configuration>
+							<karmaConfPath>test/karma.conf.js</karmaConfPath>
+						</configuration>
+					</execution>
+
+				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.gabrielfeitosa</groupId>
@@ -66,6 +156,5 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
-
 	</dependencies>
 </project>
