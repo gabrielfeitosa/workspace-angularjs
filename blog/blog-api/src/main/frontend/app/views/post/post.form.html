@@ -3,7 +3,7 @@
 	<h2>Post</h2>
 	<form name="postForm">
 		<p style="width: 180px;" ng-if="!editCtrl.post.id">
-			<input  type="text" class="form-control" ng-disabled="editCtrl.post.usuario" ng-model="editCtrl.post.usuario" ng-required="true" placeholder="Usuário (Obrigatório) "/>
+			<input  type="text" class="form-control" ng-disabled="editCtrl.isHabilitarCampoUsuario()" ng-model="editCtrl.post.usuario" ng-required="true" placeholder="Usuário (Obrigatório) "/>
 		</p>
 		<p><input type="text" class="form-control" ng-model="editCtrl.post.titulo" ng-required="true" placeholder="Título (Obrigatório) "/></p>
 		<div text-angular ng-model="editCtrl.post.texto" ng-required="true"></div>

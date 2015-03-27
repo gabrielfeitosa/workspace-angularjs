@@ -9,6 +9,7 @@ function PostEditController(PostService,RouterFactory,AuthFactory,toastr) {
 	var vm = this;
 
 	vm.salvar = salvar;
+	vm.isHabilitarCampoUsuario = isHabilitarCampoUsuario;
 
 	iniciar();
 
@@ -23,6 +24,10 @@ function PostEditController(PostService,RouterFactory,AuthFactory,toastr) {
 		}else if(AuthFactory.isLogado()){
 			vm.post.usuario = AuthFactory.getUser().login;
 		}
+	}
+
+	function isHabilitarCampoUsuario(){
+		return AuthFactory.isLogado();
 	}
 
 	function salvar(){
