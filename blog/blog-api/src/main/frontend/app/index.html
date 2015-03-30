@@ -23,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="styles/lib/loading-bar.css">
     <!-- endbuild -->
   </head>
-  <body>
+  <body ng-cloak>
 
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -32,76 +32,34 @@
     <div id="navegacao" class="blog-masthead" ng-cloak>
       <div class="container" >
         <nav class="blog-nav">
-          <span ng-controller="NavController as nav">
-
-           <a class="blog-nav-item" ng-repeat="m in nav.menu" ui-sref="{{m.state}}" ng-class="{ 'active': nav.activeClass(m.state) }">{{m.item}}</a>
+          <span ng-controller="NavController as navCtrl">
+            <ng-include src="navCtrl.viewTemplate"/>
           </span>
-          <form class="navbar-form navbar-right" ng-controller="LoginController as loginCtrl">
-           <span ng-if="!loginCtrl.isLogado()">
-             <div class="form-group">
-               <input type="text" placeholder="Email" class="form-control" ng-model="email">
-             </div>
-             <div class="form-group">
-               <input type="password" placeholder="Password" class="form-control" ng-model="pass">
-             </div>
-             <button type="submit" ng-click="loginCtrl.doLogin(email,pass);" class="btn btn-success">Sign in</button>
-           </span>
-           <span ng-if="loginCtrl.isLogado()">
-             <div class="form-group">
-               <label style="color: #ffffff;margin-right:5px;" >Olá, {{loginCtrl.user.nome}}</label>
-             </div>
-             <button type="submit" class="btn btn-success" ng-click="loginCtrl.doLogout();">Logout</button>
-           </span>
-
-         </form>
+          <span ng-controller="LoginController as loginCtrl">
+            <ng-include src="loginCtrl.viewTemplate"/>
+          </span>
         </nav>
       </div>
     </div>
 
     <div class="container">
       <div class="blog-header">
-        <h1 class="blog-title">Blog AngularJS + Bootstrap </h1>
-        <p class="lead blog-description">Aplicação de estudo sobre o AngularJS, Bootstrap.</p>
+        <h1 class="blog-title">Blog Frontend </h1>
+        <p class="lead blog-description">Aplicação de estudo sobre o AngularJS, Bootstrap, Grunt, Bower, JSHint, Yeoman, Karma, Jasmine.</p>
         <hr>
       </div>
 
       <div class="row">
         <div class="col-sm-8 blog-main">
            <div ui-view class="view-frame"> </div>
-       </div>
-
-
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-          <div class="sidebar-module sidebar-module-inset">
-            <h4>Sobre</h4>
-            <p>Aplicação desenvolvida por <a target="_blank" href="http://br.linkedin.com/in/gabrielfeitosa">Gabriel Feitosa</a> para estudo sobre o AngularJS e o Bootstrap.</p>
-          </div>
-          <div class="sidebar-module">
-            <h4>Arquivos</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">Janeiro 2015</a></li>
-            </ol>
-          </div>
-          <div class="sidebar-module">
-            <h4>Elsewhere</h4>
-            <ol class="list-unstyled">
-              <li><a target="_blank" href="https://github.com/gabrielfeitosa">GitHub</a></li>
-              <li><a target="_blank" href="http://br.linkedin.com/in/gabrielfeitosa">LinkedIn</a></li>
-            </ol>
-          </div>
-        </div><!-- /.blog-sidebar -->
-
-      </div><!-- /.row -->
+        </div>
+        <span ng-include="'views/core/barra_lateral.tpl.html'">
+        </span>
+      </div>
 
     </div><!-- /.container -->
-
-    <footer class="blog-footer">
-      <p><a target="_blank" href="https://github.com/gabrielfeitosa">Gabriel Feitosa</a> - 2015</p>
-      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-      <p>
-        <a href="#navegacao">Back to top</a>
-      </p>
-    </footer>
+    <span ng-include="'views/core/footer.tpl.html'">
+    </span>
 
 
     <!-- build:js(.) scripts/vendor.js -->
@@ -129,29 +87,34 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <!-- Filters -->
-    <script src="scripts/filters/limitar.texto.filter.js"></script>
-    <!-- Services -->
-    <script src="scripts/services/comentario.service.js"></script>
-    <script src="scripts/services/auth.service.js"></script>
-    <script src="scripts/services/post.service.js"></script>
-    <script src="scripts/services/post.service.js"></script>
-    <!-- Factories -->
-    <script src="scripts/factories/router.factory.js"></script>
-    <script src="scripts/factories/auth.factory.js"></script>
-    <script src="scripts/factories/modal.factory.js"></script>
-    <script src="scripts/factories/httpInterceptor.factory.js"></script>
-    <!-- Config -->
-    <script src="scripts/config/router.config.js"></script>
-    <script src="scripts/config/storage.config.js"></script>
-    <!-- Controllers -->
-    <script src="scripts/controllers/util/modal.controller.js"></script>
-    <script src="scripts/controllers/util/nav.controller.js"></script>
-    <script src="scripts/controllers/post/post.edit.controller.js"></script>
-    <script src="scripts/controllers/post/post.detail.controller.js"></script>
-    <script src="scripts/controllers/post/post.list.controller.js"></script>
-    <script src="scripts/controllers/post/comentario.controller.js"></script>
-    <script src="scripts/controllers/login.controller.js"></script>
+
+    <!--Features -->
+    <!--Login -->
+    <script src="scripts/login/login.app.js"></script>
+    <script src="scripts/login/login.controller.js"></script>
+    <script src="scripts/login/auth.factory.js"></script>
+    <script src="scripts/login/auth.service.js"></script>
+
+    <!--Core -->
+    <script src="scripts/core/core.app.js"></script>
+    <script src="scripts/core/modal.controller.js"></script>
+    <script src="scripts/core/modal.factory.js"></script>
+    <script src="scripts/core/router.factory.js"></script>
+    <script src="scripts/core/httpInterceptor.factory.js"></script>
+    <script src="scripts/core/router.config.js"></script>
+    <script src="scripts/core/limitar.texto.filter.js"></script>
+    <script src="scripts/core/nav.controller.js"></script>
+
+    <!-- Post -->
+    <script src="scripts/post/post.app.js"></script>
+    <script src="scripts/post/post.edit.controller.js"></script>
+    <script src="scripts/post/post.detail.controller.js"></script>
+    <script src="scripts/post/post.list.controller.js"></script>
+    <script src="scripts/post/comentario.controller.js"></script>
+    <script src="scripts/post/comentario.service.js"></script>
+    <script src="scripts/post/post.service.js"></script>
+
+    <!-- end Features -->
     <!-- Lib -->
     <script src="scripts/lib/loading-bar.js"></script>
     <!-- endbuild -->

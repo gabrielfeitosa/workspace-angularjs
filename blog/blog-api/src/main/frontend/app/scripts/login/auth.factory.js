@@ -1,12 +1,12 @@
 (function(){
 'use strict';
 
-angular.module('blog.app')
+angular.module('login.app')
 .factory('AuthFactory',AuthFactory);
 
-AuthFactory.$inject = ['$q','localStorageService','AuthService','RouterFactory'];
+AuthFactory.$inject = ['$q','localStorageService','AuthService'];
 
-function AuthFactory($q,localStorageService,AuthService,RouterFactory){
+function AuthFactory($q,localStorageService,AuthService){
 
   function get(){
     var user = localStorageService.get('user');
@@ -28,9 +28,9 @@ function AuthFactory($q,localStorageService,AuthService,RouterFactory){
       });
     },
     logout: function(){
-      AuthService.logout().then(function(){
+      return AuthService.logout().then(function(){
         localStorageService.remove('user');
-        RouterFactory.reload();
+        return $q.defer().resolve();
       });
     },
     getUser: function(){

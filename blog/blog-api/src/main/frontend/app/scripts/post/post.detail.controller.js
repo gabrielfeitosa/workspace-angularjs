@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blog.app').controller('PostDetailController',PostDetailController);
+angular.module('post.app').controller('PostDetailController',PostDetailController);
 
 PostDetailController.$inject = ['ModalFactory','PostService','AuthFactory','RouterFactory','toastr'];
 

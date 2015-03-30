@@ -1,13 +1,13 @@
 (function(){
 'use strict';
 
-angular.module('blog.app').factory('ComentarioService',ComentarioService);
+angular.module('post.app').factory('ComentarioService',ComentarioService);
 
-ComentarioService.$inject = ['$resource','urlApi'];
+ComentarioService.$inject = ['$resource','postUrlApi'];
 
-function ComentarioService($resource,urlApi){
+function ComentarioService($resource,postUrlApi){
 
-  var resource = $resource(urlApi+'posts/:id/comentarios',{},{
+  var resource = $resource(postUrlApi+'/:id/comentarios',{},{
   });
 
   function promise(ch){

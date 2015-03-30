@@ -3,11 +3,11 @@
 
 angular.module('blog.app').factory('PostService',PostService);
 
-PostService.$inject = ['$resource','urlApi'];
+PostService.$inject = ['$resource','postUrlApi'];
 
-function PostService($resource,urlApi){
+function PostService($resource,postUrlApi){
 
-  var resource = $resource(urlApi+'posts/:id',{},{
+  var resource = $resource(postUrlApi+'/:id',{},{
     update:{method: 'PUT'}
   });
 

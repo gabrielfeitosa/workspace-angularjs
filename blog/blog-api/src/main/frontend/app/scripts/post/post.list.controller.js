@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-angular.module('blog.app').controller('PostListController',PostListController);
+angular.module('post.app').controller('PostListController',PostListController);
 
 PostListController.$inject = ['PostService'];
 

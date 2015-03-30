@@ -1,7 +1,7 @@
 (function(){
  'use strict';
 
-angular.module('blog.app').factory('RouterFactory',RouterFactory);
+angular.module('core.app').factory('RouterFactory',RouterFactory);
 
 RouterFactory.$inject = ['$state','$stateParams'];
 

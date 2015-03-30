@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blog.app').filter('limitarTexto', limitarTexto);
+angular.module('core.app').filter('limitarTexto', limitarTexto);
 
 function limitarTexto() {
   return function (item,limit) {

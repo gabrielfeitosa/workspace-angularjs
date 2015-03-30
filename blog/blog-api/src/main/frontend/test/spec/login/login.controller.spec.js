@@ -1,9 +1,10 @@
 (function(){
 'use strict';
 
-describe('Controlador: LoginController', function(){
+describe('Módulo Login', function(){
 
-  beforeEach(module('blog.app'));
+  beforeEach(module('login.app'));
+
   var usuarioMock = {login: 'gabrielfeitosa', email: 'test@xpto.tt'};
 
   var $rootScope,deferred,state;

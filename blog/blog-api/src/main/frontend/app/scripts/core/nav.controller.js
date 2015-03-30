@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-angular.module('blog.app').controller('NavController',NavController);
+angular.module('core.app').controller('NavController',NavController);
 
 NavController.$inject = ['RouterFactory'];
 
@@ -8,7 +8,7 @@ function NavController(RouterFactory) {
 	var vm = this;
 
 	vm.activeClass = activeClass;
-
+	vm.viewTemplate = 'views/core/nav.tpl.html';
 	iniciar();
 
 	//////////////////////

@@ -1,11 +1,11 @@
 (function(){
 'use strict';
 
-angular.module('blog.app').factory('AuthService', AuthService);
+angular.module('login.app').factory('AuthService', AuthService);
 
-AuthService.$inject = ['$resource','urlApi'];
-function AuthService($resource,urlApi){
-  var resource = $resource(urlApi+'auth/:event',{event:''},{
+AuthService.$inject = ['$resource','authUrlApi'];
+function AuthService($resource,authUrlApi){
+  var resource = $resource(authUrlApi+'/:event',{event:''},{
     logar : {
         method : 'POST',
         params: {
@@ -28,16 +28,12 @@ function AuthService($resource,urlApi){
     }
   });
 
-  function promise(ch){
-    return ch.$promise;
-  }
-
   return {
     logar: function(email,pass){
-      return promise(resource.logar({email: email, senha: pass}));
+      return resource.logar({email: email, senha: pass}).$promise;
     },
     logout: function(){
-      return promise(resource.logout());
+      return resource.logout().$promise;
     }
   };
 }

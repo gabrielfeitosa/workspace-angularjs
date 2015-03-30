@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blog.app').controller('ComentarioController', ComentarioController);
+angular.module('post.app').controller('ComentarioController', ComentarioController);
 
 ComentarioController.$inject = ['RouterFactory','ComentarioService'];
 

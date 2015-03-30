@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blog.app').controller('LoginController',LoginController);
+angular.module('login.app').controller('LoginController',LoginController);
 
 LoginController.$inject = ['AuthFactory','RouterFactory'];
 
@@ -11,6 +11,7 @@ function LoginController(AuthFactory,RouterFactory){
   vm.isLogado = isLogado;
   vm.doLogin = doLogin;
   vm.doLogout = doLogout;
+  vm.viewTemplate = 'views/core/login.tpl.html';
 
   iniciar();
 
@@ -31,7 +32,9 @@ function LoginController(AuthFactory,RouterFactory){
   }
 
   function doLogout(){
-    AuthFactory.logout();
+    AuthFactory.logout().then(function(){
+      RouterFactory.reload();
+    });
   }
 }
 })();
