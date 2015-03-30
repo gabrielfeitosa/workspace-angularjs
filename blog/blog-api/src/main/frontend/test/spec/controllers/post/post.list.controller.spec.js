@@ -3,7 +3,7 @@
 
  describe('Controller: PostListController', function(){
 
-    beforeEach(module('blogYoApp'));
+    beforeEach(module('blog.app'));
 
     var $rootScope,ctrl,PostService,deferred;
     var postsMock = [{id:1,usuario:'fulano',titulo:'Primeiro Post',texto:'Texto do primeiro post',dataRegistro:1426506988126},

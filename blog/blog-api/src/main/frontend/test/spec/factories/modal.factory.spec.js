@@ -16,7 +16,7 @@
         $provide.value('$modal', fakeModal);
       }));
 
-      beforeEach(module('blogYoApp'));
+      beforeEach(module('blog.app'));
 
       var modalFactory;
 

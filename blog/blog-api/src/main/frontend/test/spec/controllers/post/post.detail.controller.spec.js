@@ -14,7 +14,7 @@
        };
    });
 
-  beforeEach(module('blogYoApp'));
+  beforeEach(module('blog.app'));
 
    var $rootScope,deferred,state;
    beforeEach(inject(function(_$state_,$q, _$rootScope_){

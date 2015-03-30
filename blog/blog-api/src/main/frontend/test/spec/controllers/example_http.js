@@ -19,7 +19,7 @@ describe('Controller: PostListController', function () {
       jasmine.addMatchers(customMatchers);
   });
   // load the controller's module
-  beforeEach(module('blogYoApp'));
+  beforeEach(module('blog.app'));
 
   var PostListController,
     scope,

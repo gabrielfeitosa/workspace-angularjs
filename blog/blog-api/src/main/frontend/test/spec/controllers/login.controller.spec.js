@@ -3,16 +3,27 @@
 
 describe('Controlador: LoginController', function(){
 
-  beforeEach(module('blogYoApp'));
+  beforeEach(module('blog.app'));
   var usuarioMock = {login: 'gabrielfeitosa', email: 'test@xpto.tt'};
 
-  var ctrl,createController,scope, AuthFactory;
-  beforeEach(inject(function($controller,$rootScope,_AuthFactory_){
-    scope = $rootScope.$new();
-    AuthFactory = _AuthFactory_;
+  var $rootScope,deferred,state;
+  beforeEach(inject(function(_$state_,$q, _$rootScope_){
+      state = _$state_;
+      spyOn(state,'go');
+      spyOn(state,'transitionTo');
+      $rootScope = _$rootScope_;
+      deferred = $q.defer();
+    })
+  );
 
+  var ctrl,createController, AuthFactory,RouterFactory;
+  beforeEach(inject(function($controller,_AuthFactory_,_RouterFactory_){
+    AuthFactory = _AuthFactory_;
+    RouterFactory = _RouterFactory_;
+    spyOn(RouterFactory,'reload');
+    spyOn(AuthFactory, 'logar').and.returnValue(deferred.promise);
     createController = function(){
-      return $controller('LoginController',{$scope: scope});
+      return $controller('LoginController');
     };
     ctrl = createController();
   }));
@@ -46,17 +57,25 @@ describe('Controlador: LoginController', function(){
     });
 
     it('Deveria dar erro ao fazer login', function(){
-      spyOn(AuthFactory,'logar');
+      spyOn(AuthFactory,'getUser');
       expect(ctrl.user).toEqualData({});
+      deferred.reject();
       ctrl.doLogin('test@xpto.tt','blog');
-      expect(ctrl.user).toEqualData({});
+      $rootScope.$apply();
       expect(AuthFactory.logar).toHaveBeenCalledWith('test@xpto.tt','blog');
+      expect(ctrl.user).toEqualData({});
+      expect(AuthFactory.getUser).not.toHaveBeenCalled();
     });
 
     it('Deveria fazer login com sucesso', function(){
-      spyOn(AuthFactory,'logar');
+      expect(ctrl.user).toEqualData({});
+      spyOn(AuthFactory,'getUser').and.returnValue(usuarioMock);
+      deferred.resolve(usuarioMock);
       ctrl.doLogin('test@xpto.tt','blog');
+      $rootScope.$apply();
       expect(AuthFactory.logar).toHaveBeenCalledWith('test@xpto.tt','blog');
+      expect(AuthFactory.getUser).toHaveBeenCalled();
+      expect(ctrl.user).toEqualData(usuarioMock);
     });
 
     it('Deveria fazer logout',function(){

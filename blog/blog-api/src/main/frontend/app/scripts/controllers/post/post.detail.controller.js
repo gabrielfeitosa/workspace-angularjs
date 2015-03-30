@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blogYoApp').controller('PostDetailController',PostDetailController);
+angular.module('blog.app').controller('PostDetailController',PostDetailController);
 
 PostDetailController.$inject = ['ModalFactory','PostService','AuthFactory','RouterFactory','toastr'];
 

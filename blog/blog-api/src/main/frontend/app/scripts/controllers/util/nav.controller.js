@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-angular.module('blogYoApp').controller('NavController',NavController);
+angular.module('blog.app').controller('NavController',NavController);
 
 NavController.$inject = ['RouterFactory'];
 

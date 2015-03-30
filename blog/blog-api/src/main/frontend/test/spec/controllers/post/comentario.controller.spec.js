@@ -3,7 +3,7 @@
 
    describe('Controller: ComentarioController', function(){
 
-      beforeEach(module('blogYoApp'));
+      beforeEach(module('blog.app'));
 
       var mockPromiseErro = {
         then: function(successFn, errorFn) {

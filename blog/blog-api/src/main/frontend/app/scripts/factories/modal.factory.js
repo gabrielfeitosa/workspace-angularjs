@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blogYoApp').factory('ModalFactory',ModalFactory);
+angular.module('blog.app').factory('ModalFactory',ModalFactory);
 
 ModalFactory.$inject = ['$modal'];
 

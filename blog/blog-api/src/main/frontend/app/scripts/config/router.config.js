@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blogYoApp')
+angular.module('blog.app')
 .config(['$stateProvider', '$urlRouterProvider', '$httpProvider',function($stateProvider, $urlRouterProvider,$httpProvider) {
 
   $httpProvider.defaults.withCredentials = true;

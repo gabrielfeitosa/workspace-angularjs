@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blogYoApp', [
+angular.module('blog.app', [
     'ngResource',
     'ngCookies',
     'ngAnimate',
@@ -20,7 +20,7 @@ toastr.options = {
   'positionClass': 'toast-top-right',
   'timeOut': '4000'
 };
-angular.module('blogYoApp').constant('toastr', toastr);
+angular.module('blog.app').constant('toastr', toastr);
 /* jshint ignore:end */
 
 })();

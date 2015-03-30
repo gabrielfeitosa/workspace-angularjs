@@ -1,11 +1,11 @@
 (function(){
 'use strict';
 
-angular.module('blogYoApp').controller('LoginController',LoginController);
+angular.module('blog.app').controller('LoginController',LoginController);
 
-LoginController.$inject = ['$scope','AuthFactory'];
+LoginController.$inject = ['AuthFactory','RouterFactory'];
 
-function LoginController($scope,AuthFactory){
+function LoginController(AuthFactory,RouterFactory){
   var vm = this;
 
   vm.isLogado = isLogado;
@@ -24,7 +24,10 @@ function LoginController($scope,AuthFactory){
   }
 
 	function doLogin(email,pass){
-    AuthFactory.logar(email, pass);
+    AuthFactory.logar(email, pass).then(function(){
+      iniciar();
+      RouterFactory.reload();
+    });
   }
 
   function doLogout(){

@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-angular.module('blogYoApp').controller('PostEditController', PostEditController);
+angular.module('blog.app').controller('PostEditController', PostEditController);
 
 PostEditController.$inject = ['PostService','RouterFactory','AuthFactory','toastr'];
 

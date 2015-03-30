@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blogYoApp')
+angular.module('blog.app')
 .factory('HttpInterceptor',HttpInterceptor);
 
 HttpInterceptor.$inject = ['$q'];

@@ -3,7 +3,7 @@
 
    describe('Controlador: ModalController', function(){
 
-      beforeEach(module('blogYoApp'));
+      beforeEach(module('blog.app'));
 
       var modalInstance;
       beforeEach(function(){

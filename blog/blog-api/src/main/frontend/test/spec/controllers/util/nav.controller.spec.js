@@ -3,7 +3,7 @@
 
    describe('Controlador: NavController', function(){
 
-      beforeEach(module('blogYoApp'));
+      beforeEach(module('blog.app'));
 
       var ctrl,RouterFactory;
       beforeEach(inject(function($controller,_RouterFactory_){

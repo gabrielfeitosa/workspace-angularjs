@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-angular.module('blogYoApp').controller('ModalController',ModalController);
+angular.module('blog.app').controller('ModalController',ModalController);
 
 ModalController.$inject = ['$modalInstance'];
 
