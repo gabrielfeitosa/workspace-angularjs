@@ -9,7 +9,7 @@ HttpInterceptor.$inject = ['$q'];
 function HttpInterceptor($q){
   return {
     'responseError': function(rejection) {
-      console.log('HttpInterceptor: '+rejection);
+      console.log('HttpInterceptor: '+rejection.data);
       return $q.reject(rejection);
     }
   };

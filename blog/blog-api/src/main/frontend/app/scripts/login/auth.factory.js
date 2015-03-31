@@ -10,7 +10,7 @@ function AuthFactory($q,localStorageService,AuthService){
 
   function get(){
     var user = localStorageService.get('user');
-    if(user === null){
+    if(!user){
       user = {};
     }
     return user;

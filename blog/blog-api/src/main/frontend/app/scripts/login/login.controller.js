@@ -25,8 +25,8 @@ function LoginController(AuthFactory,RouterFactory){
   }
 
 	function doLogin(email,pass){
-    AuthFactory.logar(email, pass).then(function(){
-      iniciar();
+    AuthFactory.logar(email, pass).then(function(data){
+      vm.user = data;
       RouterFactory.reload();
     });
   }
