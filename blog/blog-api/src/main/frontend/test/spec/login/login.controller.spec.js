@@ -7,11 +7,10 @@ describe('Módulo Login', function(){
 
   var usuarioMock = {login: 'gabrielfeitosa', email: 'test@xpto.tt'};
 
-  var $rootScope,deferred,state;
+  var $rootScope,deferred;
   beforeEach(inject(function(_$state_,$q, _$rootScope_){
-      state = _$state_;
-      spyOn(state,'go');
-      spyOn(state,'transitionTo');
+      spyOn(_$state_,'go');
+      spyOn(_$state_,'transitionTo');
       $rootScope = _$rootScope_;
       deferred = $q.defer();
     })
@@ -78,14 +77,20 @@ describe('Módulo Login', function(){
       expect(AuthFactory.getUser).toHaveBeenCalled();
       expect(ctrl.user).toEqualData(usuarioMock);
     });
-
-    it('Deveria fazer logout',function(){
-      spyOn(AuthFactory,'logout');
-      ctrl.user = usuarioMock;
-      expect(AuthFactory.logout).not.toHaveBeenCalled();
-      expect(ctrl.user).toEqualData(usuarioMock);
-      ctrl.doLogout();
-      expect(AuthFactory.logout).toHaveBeenCalled();
+    describe('Validar regras para logout', function(){
+      beforeEach(function(){
+        spyOn(AuthFactory, 'logout').and.returnValue(deferred.promise);
+      })
+      it('Deveria fazer logout',function(){
+        ctrl.user = usuarioMock;
+        expect(AuthFactory.logout).not.toHaveBeenCalled();
+        expect(ctrl.user).toEqualData(usuarioMock);
+        deferred.resolve();
+        ctrl.doLogout();
+        $rootScope.$apply();
+        expect(AuthFactory.logout).toHaveBeenCalled();
+        expect(RouterFactory.reload).toHaveBeenCalled();
+      });
     });
   });
 });
