@@ -32,11 +32,11 @@
     <div id="navegacao" class="blog-masthead" ng-cloak>
       <div class="container" >
         <nav class="blog-nav">
-          <span ng-controller="NavController as navCtrl">
-            <ng-include src="navCtrl.viewTemplate"/>
+          <span>
+            <navegacao/>
           </span>
-          <span ng-controller="LoginController as loginCtrl">
-            <ng-include src="loginCtrl.viewTemplate"/>
+          <span>
+            <auth/>
           </span>
         </nav>
       </div>
@@ -86,27 +86,29 @@
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
+    <script src="scripts/app/app.js"></script>
+    <script src="scripts/app/router.config.js"></script>
+    <script src="scripts/app/about.controller.js"></script>
+    <script src="scripts/app/navegacao.directive.js"></script>
 
     <!--Features -->
     <!--Login -->
     <script src="scripts/login/login.app.js"></script>
-    <script src="scripts/login/login.controller.js"></script>
     <script src="scripts/login/auth.factory.js"></script>
     <script src="scripts/login/auth.service.js"></script>
-
+    <script src="scripts/login/auth.directive.js"></script>
     <!--Core -->
     <script src="scripts/core/core.app.js"></script>
     <script src="scripts/core/modal.controller.js"></script>
     <script src="scripts/core/modal.factory.js"></script>
+    <script src="scripts/core/limitar.texto.filter.js"></script>
     <script src="scripts/core/router.factory.js"></script>
     <script src="scripts/core/httpInterceptor.factory.js"></script>
-    <script src="scripts/core/router.config.js"></script>
-    <script src="scripts/core/limitar.texto.filter.js"></script>
-    <script src="scripts/core/nav.controller.js"></script>
+
 
     <!-- Post -->
     <script src="scripts/post/post.app.js"></script>
+    <script src="scripts/post/router.config.js"></script>
     <script src="scripts/post/post.edit.controller.js"></script>
     <script src="scripts/post/post.detail.controller.js"></script>
     <script src="scripts/post/post.list.controller.js"></script>

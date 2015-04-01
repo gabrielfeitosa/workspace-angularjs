@@ -24,7 +24,7 @@ function AuthFactory($q,localStorageService,AuthService){
     logar: function(email,pass){
       return AuthService.logar(email,pass).then(function(data){
         set(data);
-        return $q.defer().resolve(data);
+        return $q.when(data);
       });
     },
     logout: function(){

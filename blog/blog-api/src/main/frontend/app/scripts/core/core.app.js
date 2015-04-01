@@ -3,11 +3,8 @@
 
  angular.module('core.app',[
    'ui.bootstrap',
+   'ngAnimate',
    'ui.router',
-   'angular-loading-bar',
-   'ngResource',
-   'ngCookies',
-   'ngAnimate'
 ]);
  /* jshint ignore:start */
  toastr.options = {

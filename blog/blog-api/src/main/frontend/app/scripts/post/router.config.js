@@ -1,20 +1,12 @@
 (function(){
 'use strict';
 
-angular.module('core.app')
+angular.module('post.app')
 .config(['$stateProvider', '$urlRouterProvider', '$httpProvider',function($stateProvider, $urlRouterProvider,$httpProvider) {
 
   $httpProvider.defaults.withCredentials = true;
-  $httpProvider.interceptors.push('HttpInterceptor');
-  $urlRouterProvider.otherwise('/home');
 
   $stateProvider
-    .state('home', {
-      url: '/home',
-      templateUrl: 'views/post/post.list.html',
-      controller: 'PostListController',
-      controllerAs: 'vm'
-    })
     .state('post',{
       url: '/post',
       abstract: true,
