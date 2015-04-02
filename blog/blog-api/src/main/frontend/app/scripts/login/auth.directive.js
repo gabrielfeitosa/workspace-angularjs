@@ -3,11 +3,11 @@
 
     angular
         .module('login.app')
-        .directive('auth', auth);
+        .directive('login', login);
 
-    function auth() {
+    function login() {
         var directive = {
-            restrict: 'EA',
+            restrict: 'E',
             templateUrl: 'views/login.tpl.html',
             controller: 'LoginController',
             controllerAs: 'loginCtrl',

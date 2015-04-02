@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" href="foundation.min.css"/>
+    <link rel="stylesheet" href="app.css"/>
+
+</head>
+<body>
+
+    <script src="../bower_components/angular/angular.min.js"></script>
+
+    <div ng-app="loadingIndicatorApp">
+
+
+        <div ng-controller="simpleListController">
+            <h3>Controller 1</h3>
+
+            <div loading-indicator></div>
+
+            <div ng-repeat="row in rows">
+                <div>{{row.id}} - {{row.content}}</div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script>
+        var app = angular.module("loadingIndicatorApp", []);
+        app.config(function($httpProvider) {
+            $httpProvider.interceptors.push(function($q, $rootScope) {
+                return {
+                    'request': function(config) {
+                        $rootScope.$broadcast('loading-started');
+                        return config || $q.when(config);
+                    },
+                    'response': function(response) {
+                        $rootScope.$broadcast('loading-complete');
+                        return response || $q.when(response);
+                    }
+                };
+            });
+        });
+        app.directive("loadingIndicator", function() {
+            return {
+                restrict : "A",
+                template: "<div>Loading...</div>",
+                link : function(scope, element, attrs) {
+                    scope.$on("loading-started", function(e) {
+                        element.css({"display" : ""});
+                    });
+                    scope.$on("loading-complete", function(e) {
+                        element.css({"display" : "none"});
+                    });
+                }
+            };
+        });
+        app.controller("simpleListController", function($scope, $http) {
+            var config = {
+                params: {
+                    'rows': 10,
+                    'id' : '{index}',
+                    'content': '{lorem|10}',
+                    'delay' : 1,
+                    'callback': "JSON_CALLBACK"
+                }
+            };
+            $http.jsonp("http://www.filltext.com", config, {})
+                    .success(function(data) {
+                        $scope.rows = data;
+                    });
+        });
+    </script>
+
+</body>
+</html>

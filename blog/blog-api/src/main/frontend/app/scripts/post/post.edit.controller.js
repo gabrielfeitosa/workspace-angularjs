@@ -9,6 +9,7 @@ function PostEditController(PostService,RouterFactory,AuthFactory,toastr) {
 	var vm = this;
 
 	vm.salvar = salvar;
+	vm.reset = reset;
 	vm.isHabilitarCampoUsuario = isHabilitarCampoUsuario;
 
 	iniciar();
@@ -53,6 +54,10 @@ function PostEditController(PostService,RouterFactory,AuthFactory,toastr) {
 			toastr.success('Novo post na parada \\o/');
 			RouterFactory.go('home');
 		});
+	}
+
+	function reset(){
+		vm.post.texto = '';
 	}
 }
 })();
