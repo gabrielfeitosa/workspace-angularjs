@@ -12,4 +12,5 @@ angular.module('blog.app', [
     'ngResource',
     'ngAnimate'
 ]);
+
 })();

@@ -16,7 +16,10 @@ angular.module('post.app')
       url: '',
       templateUrl: 'views/post/post.form.html',
       controller: 'PostEditController',
-      controllerAs: 'editCtrl'
+      controllerAs: 'editCtrl',
+      data: {
+        requireLogin: true
+      }
     })
     .state('post.detail', {
       url: '/:id',

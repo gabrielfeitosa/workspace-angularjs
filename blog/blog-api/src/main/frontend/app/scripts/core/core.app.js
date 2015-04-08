@@ -6,6 +6,7 @@
    'ngAnimate',
    'ui.router',
 ]);
+
  /* jshint ignore:start */
  toastr.options = {
    'closeButton': true,
