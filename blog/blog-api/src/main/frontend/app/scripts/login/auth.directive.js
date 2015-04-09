@@ -48,7 +48,11 @@
 
       function doLogout(){
         AuthFactory.logout().then(function(){
-          RouterFactory.reload();
+          if(RouterFactory.isRequiredLogin()){
+            RouterFactory.go('home');
+          }else{
+            RouterFactory.reload();
+          }
         });
       }
     }

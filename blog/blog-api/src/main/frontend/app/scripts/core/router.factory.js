@@ -19,6 +19,10 @@ function RouterFactory($state,$stateParams){
     },
     reload: function(){
       $state.go($state.current, {}, {reload: true});
+    },
+    isRequiredLogin: function(){
+      var data = $state.current.data;
+      return angular.isDefined(data) && data.requireLogin;
     }
   };
 }

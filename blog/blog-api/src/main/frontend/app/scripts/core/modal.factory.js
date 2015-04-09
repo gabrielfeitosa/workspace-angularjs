@@ -16,6 +16,15 @@ function ModalFactory($modal){
         controllerAs: 'modalCtrl',
   		  size: 'sm'
       }).result;
+    },
+    showLogin: function(){
+      var url = urlTemplate+'modal.login.tpl.html';
+      return $modal.open({
+  		  templateUrl: url,
+  		  controller: 'LoginModalController',
+        controllerAs: 'modalCtrl',
+  		  size: 'sm'
+      }).result;
     }
   };
 }

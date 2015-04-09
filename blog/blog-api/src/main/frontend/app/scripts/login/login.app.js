@@ -12,13 +12,16 @@
     localStorageServiceProvider.setPrefix('blogLs');
   }
 
-  InitApp.$inject = ['$rootScope','toastr','AuthFactory'];
+  InitApp.$inject = ['$rootScope','$state','AuthFactory','ModalFactory'];
 
-  function InitApp($rootScope,toastr,AuthFactory) {
-    $rootScope.$on('$stateChangeStart', function (event, next) {
-      if(angular.isDefined(next.data) && next.data.requireLogin){
-        console.log('Logado '+AuthFactory.isLogado());
-      }      
+  function InitApp($rootScope,$state,AuthFactory,ModalFactory) {
+    $rootScope.$on('$stateChangeStart', function (event,toState, toParams) {
+      if(angular.isDefined(toState.data) && toState.data.requireLogin && !AuthFactory.isLogado()){
+        event.preventDefault();
+        ModalFactory.showLogin().then(function(){
+          $state.go(toState.name, toParams);
+        });
+      }
     });
   }
 

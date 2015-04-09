@@ -1,0 +1,12 @@
+<meta charset="UTF-8">
+<div class="modal-header" style="background-color: black;">
+	<h3 class="modal-title" style="color: white; font-weight: bold;">Login</h3>
+</div>
+<div class="modal-body form-group">
+	<input type="email" ng-model="_email"  placeholder="Email" class="form-control"/>
+  <input type="password" ng-model="_password"  placeholder="Senha" class="form-control"/>
+</div>
+<div class="modal-footer">
+	<button class="btn" ng-click="modalCtrl.submit(_email, _password)">Logar</button>
+	<button class="btn" ng-click="modalCtrl.cancel()">Cancelar</button>
+</div>
